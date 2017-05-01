@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/qri-io/content",
+	"ImportPath": "github.com/archivers-space/coverage",
 	"GoVersion": "go1.8",
 	"GodepVersion": "v79",
 	"Deps": [
@@ -23,7 +23,11 @@
 		},
 		{
 			"ImportPath": "github.com/archivers-space/archive",
-			"Rev": "51b99b3cce881aca6f42c00d63d45e1635ddc17b"
+			"Rev": "ce1b6b197875c0af936498cbbcf16788784c6738"
+		},
+		{
+			"ImportPath": "github.com/archivers-space/ffi",
+			"Rev": "99f376acf0864754b9810704ae2b41670e17bbba"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/aws",
@@ -184,10 +188,6 @@
 			"ImportPath": "github.com/pborman/uuid",
 			"Comment": "v1.0-21-g1b00554",
 			"Rev": "1b00554d822231195d1babd97ff4a781231955c9"
-		},
-		{
-			"ImportPath": "github.com/qri-io/ffi",
-			"Rev": "a3cb4cbdeec1d71910825079ec538ca4434eb524"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/acme",
