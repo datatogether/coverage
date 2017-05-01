@@ -26,6 +26,8 @@ func middleware(handler http.HandlerFunc) http.HandlerFunc {
 			}
 		}
 
+		addCORSHeaders(w, r)
+
 		// TODO - Strict Transport config?
 		// if cfg.TLS {
 		// 	// If TLS is enabled, set 1 week strict TLS, 1 week for now to prevent catastrophic mess-ups
@@ -74,4 +76,18 @@ func authMiddleware(handler http.HandlerFunc) http.HandlerFunc {
 
 	// no-auth middware func
 	return middleware(handler)
+}
+
+// addCORSHeaders adds CORS header info for whitelisted servers
+func addCORSHeaders(w http.ResponseWriter, r *http.Request) {
+	// origin := r.Header.Get("Origin")
+	// for _, o := range cfg.AllowedOrigins {
+	// 	if origin == o {
+	w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+	w.Header().Set("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type,Authorization")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	// return
+	// 	}
+	// }
 }

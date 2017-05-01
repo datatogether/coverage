@@ -52,22 +52,31 @@ func ReadCoverage(w http.ResponseWriter, r *http.Request) {
 }
 
 func RootNodeHandler(w http.ResponseWriter, r *http.Request) {
-	writeResponse(w, CopyToDepth(tree, 4))
-	WriteTreeCache("test2.json", tree)
-	// writeResponse(w, tree)
+	switch r.Method {
+	case "OPTIONS":
+		EmptyOkHandler(w, r)
+	case "GET":
+		writeResponse(w, CopyToDepth(tree, 1))
+	default:
+		NotFoundHandler(w, r)
+	}
 }
 
 func NodeHandler(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Path[len("/tree/"):]
-	node := tree.Find(id)
-	if node == nil {
-		writeErrResponse(w, http.StatusNotFound, ErrNotFound)
-		return
+	switch r.Method {
+	case "OPTIONS":
+		EmptyOkHandler(w, r)
+	case "GET":
+		id := r.URL.Path[len("/tree/"):]
+		node := tree.Find(id)
+		if node == nil {
+			writeErrResponse(w, http.StatusNotFound, ErrNotFound)
+			return
+		}
+		writeResponse(w, CopyToDepth(node, 1))
+	default:
+		NotFoundHandler(w, r)
 	}
-	logger.Println(CopyToDepth(node, 0).Children)
-	logger.Println(node)
-	// writeResponse(w, node)
-	writeResponse(w, CopyToDepth(node, 2))
 }
 
 func ListServicesHandler(w http.ResponseWriter, r *http.Request) {
