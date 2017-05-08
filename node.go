@@ -11,6 +11,8 @@ type Node struct {
 	Name                   string      `json:"name"`
 	NumDescendants         int         `json:"numDescendants,omitempty"`
 	NumDescendantsArchived int         `json:"numDescendantsArchived,omitempty"`
+	NumLeaves              int         `json:"numLeaves,omitempty"`
+	NumLeavesArchived      int         `json:"numLeavesArchived,omitempty"`
 	NumChildren            int         `json:"numChildren,omitempty"`
 	Archived               bool        `json:"archived,omitempty"`
 	Children               []*Node     `json:"children,omitempty"`
@@ -35,6 +37,8 @@ func (n *Node) Copy() *Node {
 		Name:                   n.Name,
 		NumDescendants:         n.NumDescendants,
 		NumDescendantsArchived: n.NumDescendantsArchived,
+		NumLeaves:              n.NumLeaves,
+		NumLeavesArchived:      n.NumLeavesArchived,
 		NumChildren:            n.NumChildren,
 		Archived:               n.Archived,
 		Children:               n.Children,

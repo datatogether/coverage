@@ -1,0 +1,82 @@
+[
+  {
+    "Url": "https://www.epa.gov/enviroatlas/enviroatlas-data",
+    "Available": true,
+    "WaybackUrl": "http://web.archive.org/web/20170430130424/https://www.epa.gov/enviroatlas/enviroatlas-data",
+    "Timestamp": "20170430130424",
+    "Status": "200",
+    "NumSnapshots": 1
+  },
+  {
+    "Url": "https://enviroatlas.epa.gov/arcgis/rest/services",
+    "Available": true,
+    "WaybackUrl": "http://web.archive.org/web/20170429152752/https://enviroatlas.epa.gov/arcgis/rest/services",
+    "Timestamp": "20170429152752",
+    "Status": "200",
+    "NumSnapshots": 1
+  },
+  {
+    "Url": "https://enviroatlas.epa.gov/arcgis/rest/services/Communities",
+    "Available": true,
+    "WaybackUrl": "http://web.archive.org/web/20170426215150/https://enviroatlas.epa.gov/arcgis/rest/services/Communities",
+    "Timestamp": "20170426215150",
+    "Status": "200",
+    "NumSnapshots": 1
+  },
+  {
+    "Url": "https://edg.epa.gov/metadata/",
+    "Available": true,
+    "WaybackUrl": "http://web.archive.org/web/20170501004611/https://edg.epa.gov/metadata/",
+    "Timestamp": "20170501004611",
+    "Status": "200",
+    "NumSnapshots": 1
+  },
+  {
+    "Url": "https://www3.epa.gov/enviro/html/fii/downloads/state_files/Facility%20State%20File%20Documentation.pdf",
+    "Available": true,
+    "WaybackUrl": "http://web.archive.org/web/20170428001927/https://www3.epa.gov/enviro/html/fii/downloads/state_files/Facility%20State%20File%20Documentation.pdf",
+    "Timestamp": "20170428001927",
+    "Status": "200",
+    "NumSnapshots": 1
+  },
+  {
+    "Url": "http://www.epa.gov/geospatial/",
+    "Available": true,
+    "WaybackUrl": "http://web.archive.org/web/20170507125747/https://www.epa.gov/geospatial",
+    "Timestamp": "20170507125747",
+    "Status": "200",
+    "NumSnapshots": 1
+  },
+  {
+    "Url": "https://edg.epa.gov/clipship/",
+    "Available": true,
+    "WaybackUrl": "http://web.archive.org/web/20170426214654/https://edg.epa.gov/clipship/",
+    "Timestamp": "20170426214654",
+    "Status": "200",
+    "NumSnapshots": 1
+  },
+  {
+    "Url": "https://epa.maps.arcgis.com/home/webmap/viewer.html?\u0026url=https%3A%2F%2Fenviroatlas.epa.gov%2Farcgis%2Frest%2Fservices%2FSupplemental%2FConnectivity_AllCommunities%2FMapServer",
+    "Available": true,
+    "WaybackUrl": "http://web.archive.org/web/20170430152205/https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Connectivity_AllCommunities/MapServer",
+    "Timestamp": "20170430152205",
+    "Status": "200",
+    "NumSnapshots": 1
+  },
+  {
+    "Url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Connectivity_AllCommunities/MapServer/kml/mapImage.kmz",
+    "Available": true,
+    "WaybackUrl": "http://web.archive.org/web/20170428003200/https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Connectivity_AllCommunities/MapServer/kml/mapImage.kmz",
+    "Timestamp": "20170428003200",
+    "Status": "200",
+    "NumSnapshots": 1
+  },
+  {
+    "Url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Connectivity_AllCommunities/MapServer?f=nmf",
+    "Available": true,
+    "WaybackUrl": "http://web.archive.org/web/20170428003140/https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Connectivity_AllCommunities/MapServer?f=nmf",
+    "Timestamp": "20170428003140",
+    "Status": "200",
+    "NumSnapshots": 1
+  }
+]

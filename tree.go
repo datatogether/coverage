@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	// "fmt"
+	"fmt"
 	"io/ioutil"
 	"os"
 )
@@ -15,40 +15,51 @@ func init() {
 		logger.Println(err.Error())
 	}
 
-	// if err := addSvalbardUncrawlables(tree); err != nil {
-	// 	panic(err)
-	// }
+	if err := addSvalbardUncrawlables(tree); err != nil {
+		panic(err)
+	}
 
-	// if err := addArchivers2Gotten(tree); err != nil {
-	// 	panic(err)
-	// }
+	if err := addArchivers2Gotten(tree); err != nil {
+		panic(err)
+	}
 
-	// if err := addArchiversSpaceUncrawlables(tree); err != nil {
-	// 	panic(err)
-	// }
+	if err := addArchiversSpaceUncrawlables(tree); err != nil {
+		panic(err)
+	}
 
-	// if err := addNominationUncrawlables(tree); err != nil {
-	// 	panic(err)
-	// }
+	if err := addNominationUncrawlables(tree); err != nil {
+		panic(err)
+	}
 
-	// markArchiversCompletions(tree)
-	// markArchivers2Completions(tree)
+	if err := addIAUrls(tree); err != nil {
+		panic(err)
+	}
 
-	// tree.Walk(func(n *Node) {
-	// 	n.NumDescendants = -1
-	// 	n.NumDescendantsArchived = 0
-	// 	n.NumChildren = len(n.Children)
-	// 	n.Walk(func(d *Node) {
-	// 		n.NumDescendants++
-	// 		if d.Archived {
-	// 			n.NumDescendantsArchived++
-	// 		}
-	// 	})
-	// })
+	markArchiversCompletions(tree)
+	markArchivers2Completions(tree)
+	markIACompletions(tree)
 
-	// if err := WriteTreeCache("cache.json", tree); err != nil {
-	// 	fmt.Println(err.Error())
-	// }
+	tree.Walk(func(n *Node) {
+		n.NumDescendants = -1
+		n.NumDescendantsArchived = 0
+		n.NumChildren = len(n.Children)
+		n.Walk(func(d *Node) {
+			n.NumDescendants++
+			if d.Archived {
+				n.NumDescendantsArchived++
+			}
+			if d.Children == nil {
+				n.NumLeaves++
+				if d.Archived {
+					n.NumLeavesArchived++
+				}
+			}
+		})
+	})
+
+	if err := WriteTreeCache("cache.json", tree); err != nil {
+		fmt.Println(err.Error())
+	}
 }
 
 func LoadCachedTree(n *Node) error {
