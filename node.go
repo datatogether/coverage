@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/pborman/uuid"
+	"sort"
 )
 
 // Node is a url component in the coverage tree
@@ -44,6 +45,10 @@ func (n *Node) Copy() *Node {
 		Children:               n.Children,
 		Coverage:               n.Coverage,
 	}
+}
+
+func (n *Node) SortChildren() {
+	sort.Slice(n.Children, func(i, j int) bool { return n.Children[i].Name < n.Children[j].Name })
 }
 
 func (n *Node) Find(id string) (found *Node) {

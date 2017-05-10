@@ -66,10 +66,16 @@ func addIAUrls(tree *Node) error {
 		if u.RawQuery != "" {
 			node = node.Child(u.RawQuery)
 		}
+		for _, c := range node.Coverage {
+			if c.ServiceId == iaService.Id {
+				continue
+			}
+		}
 
 		node.Coverage = append(node.Coverage, &Coverage{
-			ServiceId: iaService.Id,
-			Archived:  i.Available,
+			ServiceId:  iaService.Id,
+			Archived:   i.Available,
+			ArchiveUrl: i.WaybackUrl,
 		})
 	}
 

@@ -55,6 +55,12 @@ func addArchivers2Gotten(tree *Node) error {
 			node = node.Child(u.RawQuery)
 		}
 
+		for _, c := range node.Coverage {
+			if c.ServiceId == archivers2Service.Id {
+				continue
+			}
+		}
+
 		node.Coverage = append(node.Coverage, &Coverage{
 			// Url:       u.String(),
 			ServiceId: archivers2Service.Id,

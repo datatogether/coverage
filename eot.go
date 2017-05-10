@@ -50,6 +50,12 @@ func addNominationUncrawlables(tree *Node) error {
 			node = node.Child(u.RawQuery)
 		}
 
+		for _, c := range node.Coverage {
+			if c.ServiceId == eotService.Id {
+				continue
+			}
+		}
+
 		node.Coverage = append(node.Coverage, &Coverage{
 			ServiceId:   eotService.Id,
 			Uncrawlable: true,

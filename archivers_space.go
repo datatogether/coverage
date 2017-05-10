@@ -54,6 +54,12 @@ func addArchiversSpaceUncrawlables(tree *Node) error {
 			node = node.Child(u.RawQuery)
 		}
 
+		for _, c := range node.Coverage {
+			if c.ServiceId == archiversService.Id {
+				continue
+			}
+		}
+
 		node.Coverage = append(node.Coverage, &Coverage{
 			ServiceId: archiversService.Id,
 			Priority:  i.Priority,

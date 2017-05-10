@@ -44,6 +44,7 @@ func init() {
 		n.NumDescendantsArchived = 0
 		n.NumChildren = len(n.Children)
 		n.Walk(func(d *Node) {
+			n.SortChildren()
 			n.NumDescendants++
 			if d.Archived {
 				n.NumDescendantsArchived++
