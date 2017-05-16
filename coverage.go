@@ -73,7 +73,7 @@ func LoadCachedTree(n *tree.Node) error {
 }
 
 func WriteTreeCache(filename string, n *tree.Node) error {
-	data, err := json.Marshal(n)
+	data, err := json.MarshalIndent(n, "", "  ")
 	if err != nil {
 		return err
 	}
