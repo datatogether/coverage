@@ -5,7 +5,6 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -24,9 +23,6 @@ var (
 
 	// log output
 	logger = log.New(os.Stderr, "", log.Ldate|log.Ltime|log.Lshortfile)
-
-	// application database connection
-	appDB *sql.DB
 )
 
 func main() {
@@ -36,8 +32,6 @@ func main() {
 		// panic if the server is missing a vital configuration detail
 		panic(fmt.Errorf("server configuration error: %s", err.Error()))
 	}
-
-	connectToAppDb()
 
 	s := &http.Server{}
 	m := http.NewServeMux()
