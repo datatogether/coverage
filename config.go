@@ -1,10 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/archivers-space/archive"
-	"io/ioutil"
+	conf "github.com/archivers-space/config"
 	"os"
 	"path/filepath"
 	"strings"
@@ -19,13 +18,12 @@ const (
 
 // config holds all configuration for the server. It pulls from three places (in order):
 // 		1. environment variables
-// 		2. config.[server_mode].json <- eg: config.test.json
-// 		3. config.json
+// 		2. .[MODE].env OR .env
 //
-// env variables win, but can only set config who's json is ALL_CAPS
-// it's totally fine to not have, say, config.develop.json defined, and just
-// rely on a base config.json. But if you're in production mode & config.production.json
-// exists, that will be read *instead* of config.json.
+// globally-set env variables win.
+// it's totally fine to not have, say, .env.develop defined, and just
+// rely on a base ".env" file. But if you're in production mode & ".env.production"
+// exists, that will be read *instead* of .env
 //
 // configuration is read at startup and cannot be alterd without restarting the server.
 type config struct {
@@ -85,27 +83,12 @@ type config struct {
 func initConfig(mode string) (cfg *config, err error) {
 	cfg = &config{}
 
-	if err := loadConfigFile(mode, cfg); err != nil {
-		return cfg, err
+	if path := configFilePath(mode, cfg); path != "" {
+		logger.Printf("loading config file: %s", filepath.Base(path))
+		conf.Load(cfg, path)
+	} else {
+		conf.Load(cfg)
 	}
-
-	// override config settings with env settings, passing in the current configuration
-	// as the default. This has the effect of leaving the config.json value unchanged
-	// if the env variable is empty
-	cfg.Port = readEnvString("PORT", cfg.Port)
-	cfg.UrlRoot = readEnvString("URL_ROOT", cfg.UrlRoot)
-	cfg.PublicKey = readEnvString("PUBLIC_KEY", cfg.PublicKey)
-	cfg.TLS = readEnvBool("TLS", cfg.TLS)
-	cfg.PostgresDbUrl = readEnvString("POSTGRES_DB_URL", cfg.PostgresDbUrl)
-	cfg.HttpAuthUsername = readEnvString("HTTP_AUTH_USERNAME", cfg.HttpAuthUsername)
-	cfg.HttpAuthPassword = readEnvString("HTTP_AUTH_PASSWORD", cfg.HttpAuthPassword)
-	cfg.AwsAccessKeyId = readEnvString("AWS_ACCESS_KEY_ID", cfg.AwsAccessKeyId)
-	cfg.AwsSecretAccessKey = readEnvString("AWS_SECRET_ACCESS_KEY", cfg.AwsSecretAccessKey)
-	cfg.AwsRegion = readEnvString("AWS_REGION", cfg.AwsRegion)
-	cfg.AwsS3BucketName = readEnvString("AWS_S3_BUCKET_NAME", cfg.AwsS3BucketName)
-	cfg.AwsS3BucketPath = readEnvString("AWS_S3_BUCKET_PATH", cfg.AwsS3BucketPath)
-	cfg.CertbotResponse = readEnvString("CERTBOT_RESPONSE", cfg.CertbotResponse)
-	// cfg.StaleDuration = readEnvInt("STALE_DURATION", cfg.StaleDuration)
 
 	// make sure port is set
 	if cfg.Port == "" {
@@ -167,33 +150,17 @@ func requireConfigStrings(values map[string]string) error {
 	return nil
 }
 
-// checks for config.[mode].json file to read configuration from if the file exists
-// defaults to config.json, silently fails if no configuration file is present.
-func loadConfigFile(mode string, cfg *config) (err error) {
-	var data []byte
-
-	fileName := packagePath(fmt.Sprintf("config.%s.json", mode))
+// checks for .[mode].env file to read configuration from if the file exists
+// defaults to .env, returns "" if no file is present
+func configFilePath(mode string, cfg *config) string {
+	fileName := packagePath(fmt.Sprintf(".%s.env", mode))
 	if !fileExists(fileName) {
-		fileName = packagePath("config.json")
+		fileName = packagePath(".env")
 		if !fileExists(fileName) {
-			return nil
+			return ""
 		}
 	}
-
-	logger.Printf("reading config file: %s", fileName)
-	data, err = ioutil.ReadFile(fileName)
-	if err != nil {
-		err = fmt.Errorf("error reading %s: %s", fileName, err)
-		return
-	}
-
-	// unmarshal ("decode") config data into a config struct
-	if err = json.Unmarshal(data, cfg); err != nil {
-		err = fmt.Errorf("error parsing %s: %s", fileName, err)
-		return
-	}
-
-	return
+	return fileName
 }
 
 // Does this file exist?
