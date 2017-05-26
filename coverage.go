@@ -15,14 +15,14 @@ var t = &tree.Node{Id: "root", Name: "Coverage"}
 
 func init() {
 	if err := LoadCachedTree(t); err != nil {
-		logger.Println(err.Error())
+		log.Info("error loading cached tree:", err.Error())
 	}
 
 	for _, s := range services.Services {
 
 		if err := s.AddUrls(t); err != nil {
-			logger.Println(s.Info()["Name"])
-			logger.Println(err.Error())
+			log.Info(s.Info()["Name"])
+			log.Info(err.Error())
 		}
 
 		s.AddCoverage(t)
@@ -67,7 +67,7 @@ func LoadCachedTree(n *tree.Node) error {
 		return err
 	}
 
-	logger.Println("successfully loaded cached tree")
+	log.Info("successfully loaded cached tree")
 	*n = *t
 	return nil
 }

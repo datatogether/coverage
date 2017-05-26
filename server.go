@@ -6,10 +6,9 @@ package main
 
 import (
 	"fmt"
-	"log"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
-	"time"
 )
 
 var (
@@ -17,13 +16,18 @@ var (
 	// the config.json file and enviornment variables, see config.go for more info.
 	cfg *config
 
-	// When was the last alert sent out?
-	// Use this value to avoid bombing alerts
-	lastAlertSent *time.Time
-
-	// log output
-	logger = log.New(os.Stderr, "", log.Ldate|log.Ltime|log.Lshortfile)
+	// log output handled by logrus package
+	log = logrus.New()
 )
+
+func init() {
+	// configure logger
+	log.Out = os.Stdout
+	log.Level = logrus.InfoLevel
+	log.Formatter = &logrus.TextFormatter{
+		ForceColors: true,
+	}
+}
 
 func main() {
 	var err error
@@ -34,6 +38,20 @@ func main() {
 	}
 
 	s := &http.Server{}
+	// connect mux to server
+	s.Handler = NewServerRoutes()
+
+	// fire it up!
+	fmt.Println("starting server on port", cfg.Port)
+
+	// start server wrapped in a log.Fatal b/c http.ListenAndServe will not
+	// return unless there's an error
+	log.Fatal(StartServer(cfg, s))
+}
+
+// NewServerRoutes returns a Muxer that has all API routes.
+// This makes for easy testing using httptest package
+func NewServerRoutes() *http.ServeMux {
 	m := http.NewServeMux()
 	m.HandleFunc("/.well-known/acme-challenge/", CertbotHandler)
 	m.Handle("/", middleware(HealthCheckHandler))
@@ -49,16 +67,5 @@ func main() {
 	m.Handle("/tree", middleware(RootNodeHandler))
 	m.Handle("/tree/", middleware(NodeHandler))
 
-	// connect mux to server
-	s.Handler = m
-
-	// print notable config settings
-	// printConfigInfo()
-
-	// fire it up!
-	fmt.Println("starting server on port", cfg.Port)
-
-	// start server wrapped in a log.Fatal b/c http.ListenAndServe will not
-	// return unless there's an error
-	logger.Fatal(StartServer(cfg, s))
+	return m
 }

@@ -6,7 +6,6 @@ import (
 	conf "github.com/archivers-space/config"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 // server modes
@@ -84,7 +83,7 @@ func initConfig(mode string) (cfg *config, err error) {
 	cfg = &config{}
 
 	if path := configFilePath(mode, cfg); path != "" {
-		logger.Printf("loading config file: %s", filepath.Base(path))
+		log.Infoln("loading config file: %s", filepath.Base(path))
 		conf.Load(cfg, path)
 	} else {
 		conf.Load(cfg)
@@ -113,30 +112,6 @@ func initConfig(mode string) (cfg *config, err error) {
 
 func packagePath(path string) string {
 	return filepath.Join(os.Getenv("GOPATH"), "src/github.com/archivers-space/content", path)
-}
-
-// readEnvString reads key from the environment, returns def if empty
-func readEnvString(key, def string) string {
-	if env := os.Getenv(key); env != "" {
-		return env
-	}
-	return def
-}
-
-// readEnvBool read key form the env, converting to a boolean value. returns def if empty
-func readEnvBool(key string, def bool) bool {
-	if env := os.Getenv(key); env != "" {
-		return env == "true" || env == "TRUE" || env == "t"
-	}
-	return def
-}
-
-// readEnvString reads a slice of strings from key environment var, returns def if empty
-func readEnvStringSlice(key string, def []string) []string {
-	if env := os.Getenv(key); env != "" {
-		return strings.Split(env, ",")
-	}
-	return def
 }
 
 // requireConfigStrings panics if any of the passed in values aren't set
