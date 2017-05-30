@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/archivers-space/archive"
 	conf "github.com/archivers-space/config"
 	"os"
 	"path/filepath"
@@ -55,13 +54,6 @@ type config struct {
 	// path to store & retrieve data from
 	AwsS3BucketPath string `json:"AWS_S3_BUCKET_PATH"`
 
-	// seed        = flag.String("seed", "", "seed URL")
-	// cancelAfter = flag.Duration("cancelafter", 0, "automatically cancel the fetchbot after a given time")
-	// cancelAtURL = flag.String("cancelat", "", "automatically cancel the fetchbot at a given URL")
-	// stopAfter   = flag.Duration("stopafter", 0, "automatically stop the fetchbot after a given time")
-	// stopAtURL   = flag.String("stopat", "", "automatically stop the fetchbot at a given URL")
-	// memStats    = flag.Duration("memstats", 0, "display memory statistics at a given interval")
-
 	// setting HTTP_AUTH_USERNAME & HTTP_AUTH_PASSWORD
 	// will enable basic http auth for the server. This is a single
 	// username & password that must be passed in with every request.
@@ -83,10 +75,14 @@ func initConfig(mode string) (cfg *config, err error) {
 	cfg = &config{}
 
 	if path := configFilePath(mode, cfg); path != "" {
-		log.Infoln("loading config file: %s", filepath.Base(path))
-		conf.Load(cfg, path)
+		log.Infof("loading config file: %s", filepath.Base(path))
+		if err := conf.Load(cfg, path); err != nil {
+			log.Info("error loading config:", err)
+		}
 	} else {
-		conf.Load(cfg)
+		if err := conf.Load(cfg); err != nil {
+			log.Info("error loading config:", err)
+		}
 	}
 
 	// make sure port is set
@@ -99,13 +95,6 @@ func initConfig(mode string) (cfg *config, err error) {
 		// "POSTGRES_DB_URL": cfg.PostgresDbUrl,
 		// "PUBLIC_KEY":      cfg.PublicKey,
 	})
-
-	// transfer settings to archive library
-	archive.AwsRegion = cfg.AwsRegion
-	archive.AwsAccessKeyId = cfg.AwsAccessKeyId
-	archive.AwsS3BucketName = cfg.AwsS3BucketName
-	archive.AwsS3BucketPath = cfg.AwsS3BucketPath
-	archive.AwsSecretAccessKey = cfg.AwsSecretAccessKey
 
 	return
 }

@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "github.com/archivers-space/coverage/services"
+	"github.com/archivers-space/coverage/services"
 	"github.com/archivers-space/coverage/tree"
 	"io"
 	"net/http"
@@ -93,8 +93,7 @@ func ListServicesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ListServices(w http.ResponseWriter, r *http.Request) {
-	// TODO
-	// writePageResponse(w, services, r, PageFromRequest(r))
+	writeResponse(w, services.Services)
 }
 
 func ServicesHandler(w http.ResponseWriter, r *http.Request) {

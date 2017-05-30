@@ -22,7 +22,7 @@ var (
 
 func init() {
 	// configure logger
-	log.Out = os.Stdout
+	log.Out = os.Stderr
 	log.Level = logrus.InfoLevel
 	log.Formatter = &logrus.TextFormatter{
 		ForceColors: true,
