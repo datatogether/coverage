@@ -20,8 +20,9 @@ func CoverageSummaryHandler(w http.ResponseWriter, r *http.Request) {
 	args := &CoverageSummaryArgs{
 		Pattern: r.FormValue("pattern"),
 	}
-	res := map[string]interface{}{}
-	err := new(Coverage).Summary(args, &res)
+
+	res := &CoverageSummary{}
+	err := new(Coverage).Summary(args, res)
 	if err != nil {
 		log.Info(err.Error())
 		writeErrResponse(w, http.StatusInternalServerError, err)

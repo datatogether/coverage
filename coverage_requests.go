@@ -16,7 +16,7 @@ func (args *CoverageTreeArgs) Validate() error {
 }
 
 func (Coverage) Tree(args *CoverageTreeArgs, res *tree.Node) error {
-	root, err := CoverageTree(&archive.Source{Url: args.Pattern})
+	root, err := NewCoverageGenerator().Tree(&archive.Source{Url: args.Pattern})
 	if err != nil {
 		return err
 	}
@@ -33,12 +33,12 @@ func (args *CoverageSummaryArgs) Validate() error {
 	return nil
 }
 
-func (Coverage) Summary(args *CoverageSummaryArgs, res *map[string]interface{}) error {
-	summary, err := CoverageSummary(&archive.Source{Url: args.Pattern})
+func (Coverage) Summary(args *CoverageSummaryArgs, res *CoverageSummary) error {
+	summary, err := NewCoverageGenerator().Summary(&archive.Source{Url: args.Pattern})
 	if err != nil {
 		return err
 	}
 
-	*res = summary
+	*res = *summary
 	return nil
 }

@@ -82,7 +82,17 @@ func WriteTreeCache(filename string, n *tree.Node) error {
 	return ioutil.WriteFile(filename, data, os.ModePerm)
 }
 
-func CoverageTree(src *archive.Source) (*tree.Node, error) {
+// CovreageGen holds configuration for coverage analysis
+type CoverageGenerator struct {
+}
+
+// NewCoverageGenerator creates a CoverageGenerator with the default
+// properties
+func NewCoverageGenerator() *CoverageGenerator {
+	return &CoverageGenerator{}
+}
+
+func (c CoverageGenerator) Tree(src *archive.Source) (*tree.Node, error) {
 	t := &tree.Node{
 		Name: src.Title,
 		Id:   src.Id,
@@ -119,14 +129,19 @@ func CoverageTree(src *archive.Source) (*tree.Node, error) {
 	return t, nil
 }
 
-func CoverageSummary(src *archive.Source) (map[string]interface{}, error) {
-	t, err := CoverageTree(src)
+type CoverageSummary struct {
+	Archived    int
+	Descendants int
+}
+
+func (c CoverageGenerator) Summary(src *archive.Source) (*CoverageSummary, error) {
+	t, err := c.Tree(src)
 	if err != nil {
 		return nil, err
 	}
 
-	return map[string]interface{}{
-		"archived":    t.NumDescendantsArchived,
-		"descendants": t.NumDescendants,
+	return &CoverageSummary{
+		Archived:    t.NumDescendantsArchived,
+		Descendants: t.NumDescendants,
 	}, nil
 }

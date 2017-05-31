@@ -5,6 +5,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -18,6 +19,9 @@ var (
 
 	// log output handled by logrus package
 	log = logrus.New()
+
+	// application database connection
+	appDB *sql.DB
 )
 
 func init() {
@@ -36,6 +40,12 @@ func main() {
 		// panic if the server is missing a vital configuration detail
 		panic(fmt.Errorf("server configuration error: %s", err.Error()))
 	}
+
+	go connectToAppDb(func(err error) {
+		if err == nil {
+			update(appDB)
+		}
+	})
 
 	s := &http.Server{}
 	// connect mux to server
