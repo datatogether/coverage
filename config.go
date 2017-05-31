@@ -26,48 +26,35 @@ const (
 // configuration is read at startup and cannot be alterd without restarting the server.
 type config struct {
 	// port to listen on, will be read from PORT env variable if present.
-	Port string `json:"PORT"`
+	Port string
 
 	// root url for service
-	UrlRoot string `json:"URL_ROOT"`
+	UrlRoot string
 
 	// url of postgres app db
-	PostgresDbUrl string `json:"POSTGRES_DB_URL"`
+	PostgresDbUrl string
 
 	// Public Key to use for signing metablocks. required.
-	PublicKey string `json:"PUBLIC_KEY"`
+	PublicKey string
 
 	// TLS (HTTPS) enable support via LetsEncrypt, default false
 	// should be true in production
-	TLS bool `json:"TLS"`
-
-	// read from env variable: AWS_REGION
-	// the region your bucket is in, eg "us-east-1"
-	AwsRegion string `json:"AWS_REGION"`
-	// read from env variable: AWS_S3_BUCKET_NAME
-	// should be just the name of your bucket, no protocol prefixes or paths
-	AwsS3BucketName string `json:"AWS_S3_BUCKET_NAME"`
-	// read from env variable: AWS_ACCESS_KEY_ID
-	AwsAccessKeyId string `json:"AWS_ACCESS_KEY_ID"`
-	// read from env variable: AWS_SECRET_ACCESS_KEY
-	AwsSecretAccessKey string `json:"AWS_SECRET_ACCESS_KEY"`
-	// path to store & retrieve data from
-	AwsS3BucketPath string `json:"AWS_S3_BUCKET_PATH"`
+	TLS bool
 
 	// setting HTTP_AUTH_USERNAME & HTTP_AUTH_PASSWORD
 	// will enable basic http auth for the server. This is a single
 	// username & password that must be passed in with every request.
 	// leaving these values blank will disable http auth
 	// read from env variable: HTTP_AUTH_USERNAME
-	HttpAuthUsername string `json:"HTTP_AUTH_USERNAME"`
+	HttpAuthUsername string
 	// read from env variable: HTTP_AUTH_PASSWORD
-	HttpAuthPassword string `json:"HTTP_AUTH_PASSWORD"`
+	HttpAuthPassword string
 
 	// if true, requests that have X-Forwarded-Proto: http will be redirected
 	// to their https variant
 	ProxyForceHttps bool
 	// CertbotResponse is only for doing manual SSL certificate generation via LetsEncrypt.
-	CertbotResponse string `json:"CERTBOT_RESPONSE"`
+	CertbotResponse string
 }
 
 // initConfig pulls configuration from config.json
@@ -91,16 +78,21 @@ func initConfig(mode string) (cfg *config, err error) {
 	}
 
 	err = requireConfigStrings(map[string]string{
-		"PORT": cfg.Port,
-		// "POSTGRES_DB_URL": cfg.PostgresDbUrl,
+		"PORT":            cfg.Port,
+		"POSTGRES_DB_URL": cfg.PostgresDbUrl,
 		// "PUBLIC_KEY":      cfg.PublicKey,
 	})
+
+	// set log output to stdout in dev mode
+	if mode == DEVELOP_MODE {
+		log.Out = os.Stdout
+	}
 
 	return
 }
 
 func packagePath(path string) string {
-	return filepath.Join(os.Getenv("GOPATH"), "src/github.com/archivers-space/content", path)
+	return filepath.Join(os.Getenv("GOPATH"), "src/github.com/archivers-space/coverage", path)
 }
 
 // requireConfigStrings panics if any of the passed in values aren't set

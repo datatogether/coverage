@@ -33,6 +33,39 @@ FROM collections
 ORDER BY created DESC 
 LIMIT $1 OFFSET $2;`
 
+// insert a dataRepo
+const qDataRepoInsert = `
+INSERT INTO data_repos 
+  (id, created, updated, title, description, url) 
+VALUES ($1, $2, $3, $4, $5, $6);`
+
+// update an existing dataRepo, selecting by ID
+const qDataRepoUpdate = `
+UPDATE data_repos 
+SET created=$2, updated=$3, title=$4, description=$5, url=$6
+WHERE id = $1;`
+
+// read dataRepo info by ID
+const qDataRepoById = `
+SELECT 
+  id, created, updated, title, description, url 
+FROM data_repos 
+WHERE id = $1;`
+
+// deleted a dataRepo
+const qDataRepoDelete = `
+DELETE from data_repos 
+WHERE id = $1;`
+
+// list data_repos by reverse cronological date created
+// paginated
+const qDataRepos = `
+SELECT
+  id, created, updated, title, description, url
+FROM data_repos 
+ORDER BY created DESC 
+LIMIT $1 OFFSET $2;`
+
 // list latest metadata entries by reverse cronological order
 // paginated
 const qMetadataLatest = `
@@ -137,6 +170,9 @@ WHERE
   deleted = false AND
   primer_id = $1;`
 
+// enumerate primers
+const qPrimersCount = `SELECT count(1) FROM primers WHERE deleted = false`
+
 // list primers by reverse chronolgical created date, no hierarchy is observed
 // paginated
 const qPrimersList = `
@@ -161,6 +197,9 @@ where
   parent_id = ''
 order by created desc
 limit $1 offset $2;`
+
+// select
+const qSourcesCount = `SELECT count(1) FROM sources;`
 
 // list sources, ordered by reverse chronological created date
 // paginated

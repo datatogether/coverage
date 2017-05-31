@@ -1,7 +1,8 @@
 package main
 
 import (
-	"github.com/archivers-space/coverage/services"
+	"github.com/archivers-space/archive"
+	"github.com/archivers-space/coverage/repositories"
 	"github.com/archivers-space/coverage/tree"
 
 	"encoding/json"
@@ -18,9 +19,9 @@ func init() {
 		log.Info("error loading cached tree:", err.Error())
 	}
 
-	for _, s := range services.Services {
+	for _, s := range repositories.Repositories {
 
-		if err := s.AddUrls(t); err != nil {
+		if err := s.AddUrls(t, nil); err != nil {
 			log.Info(s.Info()["Name"])
 			log.Info(err.Error())
 		}
@@ -79,4 +80,68 @@ func WriteTreeCache(filename string, n *tree.Node) error {
 	}
 
 	return ioutil.WriteFile(filename, data, os.ModePerm)
+}
+
+// CovreageGen holds configuration for coverage analysis
+type CoverageGenerator struct {
+}
+
+// NewCoverageGenerator creates a CoverageGenerator with the default
+// properties
+func NewCoverageGenerator() *CoverageGenerator {
+	return &CoverageGenerator{}
+}
+
+func (c CoverageGenerator) Tree(src *archive.Source) (*tree.Node, error) {
+	t := &tree.Node{
+		Name: src.Title,
+		Id:   src.Id,
+	}
+
+	for _, s := range repositories.Repositories {
+		if err := s.AddUrls(t, src); err != nil {
+			log.Info(s.Info()["Name"])
+			log.Info(err.Error())
+		}
+
+		s.AddCoverage(t)
+	}
+
+	t.Walk(func(n *tree.Node) {
+		n.NumDescendants = -1
+		n.NumDescendantsArchived = 0
+		n.NumChildren = len(n.Children)
+		n.Walk(func(d *tree.Node) {
+			n.SortChildren()
+			n.NumDescendants++
+			if d.Archived {
+				n.NumDescendantsArchived++
+			}
+			if d.Children == nil {
+				n.NumLeaves++
+				if d.Archived {
+					n.NumLeavesArchived++
+				}
+			}
+		})
+	})
+
+	return t, nil
+}
+
+type CoverageSummary struct {
+	Archived    int
+	Descendants int
+}
+
+func (c CoverageGenerator) Summary(src *archive.Source) (*CoverageSummary, error) {
+	t, err := c.Tree(src)
+	if err != nil {
+		return nil, err
+	}
+
+	return &CoverageSummary{
+		Archived:    t.NumDescendantsArchived,
+		Descendants: t.NumDescendants,
+	}, nil
 }

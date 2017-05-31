@@ -5,6 +5,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -18,6 +19,9 @@ var (
 
 	// log output handled by logrus package
 	log = logrus.New()
+
+	// application database connection
+	appDB *sql.DB
 )
 
 func init() {
@@ -37,6 +41,12 @@ func main() {
 		panic(fmt.Errorf("server configuration error: %s", err.Error()))
 	}
 
+	go connectToAppDb(func(err error) {
+		if err == nil {
+			update(appDB)
+		}
+	})
+
 	s := &http.Server{}
 	// connect mux to server
 	s.Handler = NewServerRoutes()
@@ -54,18 +64,16 @@ func main() {
 func NewServerRoutes() *http.ServeMux {
 	m := http.NewServeMux()
 	m.HandleFunc("/.well-known/acme-challenge/", CertbotHandler)
-	m.Handle("/", middleware(HealthCheckHandler))
+	m.Handle("/healthcheck", middleware(HealthCheckHandler))
+	m.Handle("/", middleware(NotFoundHandler))
 
-	m.Handle("/services", middleware(ListServicesHandler))
-	m.Handle("/services/", middleware(ServicesHandler))
+	m.Handle("/repositories", middleware(ListRepositoriesHandler))
+	m.Handle("/repositories/", middleware(RepositoriesHandler))
 
 	m.Handle("/fulltree", middleware(FullTreeHandler))
 
-	// m.Handle("/coverage", middleware(CoverageHandler))
-	// m.Handle("/coverage/", middleware(CoverageHandler))
-
-	m.Handle("/tree", middleware(RootNodeHandler))
-	m.Handle("/tree/", middleware(NodeHandler))
+	m.Handle("/coverage", middleware(CoverageHandler))
+	m.Handle("/tree", middleware(CoverageTreeHandler))
 
 	return m
 }
