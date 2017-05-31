@@ -4,12 +4,12 @@ import (
 	"time"
 )
 
-// Coverage is information provided by a service about a url
+// Coverage is information provided by a repository about a url
 type Coverage struct {
 	// exact url this coverage information is about
 	Url string `json:"url,omitempty"`
 	// id of the coverage
-	ServiceId string `json:"serviceId"`
+	RepositoryId string `json:"repositoryId"`
 	// sha256 hash of the response (if present)
 	Sha256 string `json:"sha256,omitempty"`
 	// time of capture from this url

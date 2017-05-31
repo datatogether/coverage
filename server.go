@@ -54,18 +54,16 @@ func main() {
 func NewServerRoutes() *http.ServeMux {
 	m := http.NewServeMux()
 	m.HandleFunc("/.well-known/acme-challenge/", CertbotHandler)
-	m.Handle("/", middleware(HealthCheckHandler))
+	m.Handle("/healthcheck", middleware(HealthCheckHandler))
+	m.Handle("/", middleware(NotFoundHandler))
 
-	m.Handle("/services", middleware(ListServicesHandler))
-	m.Handle("/services/", middleware(ServicesHandler))
+	m.Handle("/repositories", middleware(ListRepositoriesHandler))
+	m.Handle("/repositories/", middleware(RepositoriesHandler))
 
 	m.Handle("/fulltree", middleware(FullTreeHandler))
 
-	// m.Handle("/coverage", middleware(CoverageHandler))
-	// m.Handle("/coverage/", middleware(CoverageHandler))
-
-	m.Handle("/tree", middleware(RootNodeHandler))
-	m.Handle("/tree/", middleware(NodeHandler))
+	m.Handle("/coverage", middleware(CoverageHandler))
+	m.Handle("/tree", middleware(CoverageTreeHandler))
 
 	return m
 }

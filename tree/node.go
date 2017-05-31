@@ -16,6 +16,7 @@ type Node struct {
 	NumLeavesArchived      int         `json:"numLeavesArchived,omitempty"`
 	NumChildren            int         `json:"numChildren,omitempty"`
 	Archived               bool        `json:"archived,omitempty"`
+	ArchiveCount           int         `json:"archiveCount,omitempty"`
 	Children               []*Node     `json:"children,omitempty"`
 	Coverage               []*Coverage `json:"coverage,omitempty"`
 }
