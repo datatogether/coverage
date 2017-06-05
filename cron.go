@@ -35,7 +35,7 @@ func update(db *sql.DB) error {
 		return err
 	}
 
-	if err := calcPrimerCoverage(db); err != nil {
+	if err := calcPrimerSourceCoverage(db); err != nil {
 		return err
 	}
 
@@ -82,7 +82,7 @@ func calcSourceCoverage(db *sql.DB) error {
 	return nil
 }
 
-func calcPrimerCoverage(db *sql.DB) error {
+func calcPrimerSourceCoverage(db *sql.DB) error {
 	pageSize := 100
 
 	count, err := archive.CountPrimers(appDB)
@@ -124,6 +124,25 @@ func calcPrimerCoverage(db *sql.DB) error {
 					return err
 				}
 			}
+		}
+	}
+	return nil
+}
+
+// TODO - finish
+func calcPrimerCoverage(db *sql.DB, primers []*archive.Primer) error {
+	for _, primer := range primers {
+		if err := primer.ReadSubPrimers(db); err != nil {
+			return err
+		}
+
+		if len(primer.SubPrimers) == 0 && primer.Stats != nil {
+			primer.Stats.UrlCount = primer.Stats.SourcesUrlCount
+			primer.Stats.ArchivedUrlCount = primer.Stats.SourcesArchivedUrlCount
+		}
+
+		if err := calcPrimerCoverage(db, primer.SubPrimers); err != nil {
+			return err
 		}
 	}
 	return nil
