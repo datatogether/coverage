@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"github.com/archivers-space/archive"
+	"github.com/archivers-space/coverage/coverage"
 	"time"
 )
 
@@ -43,7 +44,7 @@ func update(db *sql.DB) error {
 }
 
 func calcSourceCoverage(db *sql.DB) error {
-	cvg := NewCoverageGenerator()
+	cvg := coverage.NewCoverageGenerator()
 	pageSize := 100
 
 	count, err := archive.CountSources(appDB)

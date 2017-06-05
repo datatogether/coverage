@@ -1,9 +1,14 @@
 package main
 
 import (
+	"github.com/archivers-space/api/apiutil"
+	"github.com/archivers-space/coverage/coverage"
 	"github.com/archivers-space/coverage/tree"
 	"net/http"
 )
+
+// Concrete CoverateRequests instance
+var CoverageRequests = new(coverage.CoverageRequests)
 
 func CoverageHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -17,18 +22,18 @@ func CoverageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func CoverageSummaryHandler(w http.ResponseWriter, r *http.Request) {
-	args := &CoverageSummaryArgs{
+	args := &coverage.CoverageSummaryParams{
 		Pattern: r.FormValue("pattern"),
 	}
 
-	res := &CoverageSummary{}
-	err := new(Coverage).Summary(args, res)
+	res := &coverage.Summary{}
+	err := CoverageRequests.Summary(args, res)
 	if err != nil {
 		log.Info(err.Error())
-		writeErrResponse(w, http.StatusInternalServerError, err)
+		apiutil.WriteErrResponse(w, http.StatusInternalServerError, err)
 		return
 	}
-	writeResponse(w, res)
+	apiutil.WriteResponse(w, res)
 }
 
 func CoverageTreeHandler(w http.ResponseWriter, r *http.Request) {
@@ -43,17 +48,17 @@ func CoverageTreeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetCoverageTreeHandler(w http.ResponseWriter, r *http.Request) {
-	args := &CoverageTreeArgs{
+	args := &coverage.CoverageTreeParams{
 		Pattern: r.FormValue("pattern"),
 	}
 	res := &tree.Node{}
-	err := new(Coverage).Tree(args, res)
+	err := CoverageRequests.Tree(args, res)
 	if err != nil {
 		log.Info(err.Error())
-		writeErrResponse(w, http.StatusInternalServerError, err)
+		apiutil.WriteErrResponse(w, http.StatusInternalServerError, err)
 		return
 	}
-	writeResponse(w, res)
+	apiutil.WriteResponse(w, res)
 }
 
 func DownloadCoverageTreeHandler(w http.ResponseWriter, r *http.Request) {

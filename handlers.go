@@ -1,28 +1,20 @@
 package main
 
 import (
+	"github.com/archivers-space/api/apiutil"
 	"github.com/archivers-space/coverage/repositories"
 	"github.com/archivers-space/coverage/tree"
+	"github.com/archivers-space/errors"
 	"io"
 	"net/http"
-	"strconv"
 )
-
-func reqParamInt(key string, r *http.Request) (int, error) {
-	i, err := strconv.ParseInt(r.FormValue(key), 10, 0)
-	return int(i), err
-}
-
-func reqParamBool(key string, r *http.Request) (bool, error) {
-	return strconv.ParseBool(r.FormValue(key))
-}
 
 func RootNodeHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "OPTIONS":
 		EmptyOkHandler(w, r)
 	case "GET":
-		writeResponse(w, tree.CopyToDepth(t, 1))
+		apiutil.WriteResponse(w, tree.CopyToDepth(t, 1))
 	default:
 		NotFoundHandler(w, r)
 	}
@@ -36,10 +28,10 @@ func NodeHandler(w http.ResponseWriter, r *http.Request) {
 		id := r.URL.Path[len("/tree/"):]
 		node := t.Find(id)
 		if node == nil {
-			writeErrResponse(w, http.StatusNotFound, ErrNotFound)
+			apiutil.WriteErrResponse(w, http.StatusNotFound, errors.ErrNotFound)
 			return
 		}
-		writeResponse(w, tree.CopyToDepth(node, 1))
+		apiutil.WriteResponse(w, tree.CopyToDepth(node, 1))
 	default:
 		NotFoundHandler(w, r)
 	}
@@ -57,7 +49,7 @@ func ListRepositoriesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ListRepositories(w http.ResponseWriter, r *http.Request) {
-	writeResponse(w, repositories.Repositories)
+	apiutil.WriteResponse(w, repositories.Repositories)
 }
 
 func RepositoriesHandler(w http.ResponseWriter, r *http.Request) {
@@ -76,7 +68,7 @@ func GetRepository(w http.ResponseWriter, r *http.Request) {
 
 	for _, r := range repositories.Repositories {
 		if r.GetId() == id {
-			writeResponse(w, r)
+			apiutil.WriteResponse(w, r)
 			return
 		}
 	}
@@ -84,7 +76,7 @@ func GetRepository(w http.ResponseWriter, r *http.Request) {
 }
 
 func FullTreeHandler(w http.ResponseWriter, r *http.Request) {
-	writeResponse(w, t)
+	apiutil.WriteResponse(w, t)
 }
 
 // HealthCheckHandler is a basic "hey I'm fine" for load balancers & co
