@@ -7,6 +7,9 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/archivers-space/coverage/tree"
+	"github.com/archivers-space/sqlutil"
+	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
@@ -21,7 +24,10 @@ var (
 	log = logrus.New()
 
 	// application database connection
-	appDB *sql.DB
+	appDB = &sql.DB{}
+
+	// our main t node
+	t = &tree.Node{}
 )
 
 func init() {
@@ -41,11 +47,14 @@ func main() {
 		panic(fmt.Errorf("server configuration error: %s", err.Error()))
 	}
 
-	go connectToAppDb(func(err error) {
-		if err == nil {
-			update(appDB)
+	go func() {
+		if err := sqlutil.ConnectToDb("postgres", cfg.PostgresDbUrl, appDB); err != nil {
+			log.Infoln(err.Error())
+			return
 		}
-	})
+		update(appDB)
+	}()
+	go listenRpc()
 
 	s := &http.Server{}
 	// connect mux to server

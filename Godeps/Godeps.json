@@ -22,16 +22,28 @@
 			"Rev": "349dd0209470eabd9514242c688c403c0926d266"
 		},
 		{
+			"ImportPath": "github.com/archivers-space/api/apiutil",
+			"Rev": "df21dda000dd6c7f6f8dfc71556935f55b752787"
+		},
+		{
 			"ImportPath": "github.com/archivers-space/archive",
-			"Rev": "2cb65f3253a5559644725a268c1efbf40396b20b"
+			"Rev": "2d8c8d7efcf2a9fa11c51a5d3cfc7aa657ee247c"
 		},
 		{
 			"ImportPath": "github.com/archivers-space/config",
 			"Rev": "eba5c3af9362873cc43c38480ab443c9518c8c06"
 		},
 		{
+			"ImportPath": "github.com/archivers-space/errors",
+			"Rev": "8bdc2a3f98128fadfafdc392d56f5a2bd5c9c754"
+		},
+		{
 			"ImportPath": "github.com/archivers-space/ffi",
 			"Rev": "99f376acf0864754b9810704ae2b41670e17bbba"
+		},
+		{
+			"ImportPath": "github.com/archivers-space/sqlutil",
+			"Rev": "9ab5d36e67b7c03b85f8ca1d4552645210ea656d"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/aws",
