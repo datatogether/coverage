@@ -23,13 +23,9 @@ func (s *repository) GetId() string {
 	return s.Id
 }
 
-func (r *repository) Info() map[string]interface{} {
-	return map[string]interface{}{
-		"Id":          r.Id,
-		"Title":       r.Title,
-		"Description": r.Description,
-		"Url":         r.Url,
-	}
+func (s *repository) DataRepo() *archive.DataRepo {
+	dr := archive.DataRepo(*s)
+	return &dr
 }
 
 func (a *repository) AddCoverage(t *tree.Node) {

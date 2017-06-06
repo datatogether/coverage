@@ -13,7 +13,7 @@ import (
 // a Repository is anything that stores data.
 type Repository interface {
 	GetId() string
-	Info() map[string]interface{}
+	DataRepo() *archive.DataRepo
 }
 
 // A Coverage Repository is any service that can also provide coverage information
@@ -31,22 +31,3 @@ var Repositories = []CoverageRepository{
 	ia.Repository,
 	svalbard.Repository,
 }
-
-// Repository is anything that can provide information about archving
-// status for a given url
-// type Repository struct {
-//  Id          string
-//  Name        string
-//  Description string
-//  HomeUrl     string
-// }
-
-// func (s *Repository) Read() error {
-//  for _, ser := range repositories {
-//    if s.Id == ser.Id {
-//      *s = *ser
-//      return nil
-//    }
-//  }
-//  return ErrNotFound
-// }

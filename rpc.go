@@ -20,6 +20,11 @@ func listenRpc() error {
 		return err
 	}
 
+	if err := rpc.Register(RepositoryRequests); err != nil {
+		log.Infof("register RPC Repositories error: %s", err)
+		return err
+	}
+
 	ln, err := net.Listen("tcp", fmt.Sprintf(":%s", cfg.RpcPort))
 	if err != nil {
 		log.Infof("listen on port %s error: %s", cfg.RpcPort, err)

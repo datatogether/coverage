@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/archivers-space/api/apiutil"
-	"github.com/archivers-space/coverage/repositories"
 	"github.com/archivers-space/coverage/tree"
 	"github.com/archivers-space/errors"
 	"io"
@@ -35,44 +34,6 @@ func NodeHandler(w http.ResponseWriter, r *http.Request) {
 	default:
 		NotFoundHandler(w, r)
 	}
-}
-
-func ListRepositoriesHandler(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case "OPTIONS":
-		EmptyOkHandler(w, r)
-	case "GET":
-		ListRepositories(w, r)
-	default:
-		NotFoundHandler(w, r)
-	}
-}
-
-func ListRepositories(w http.ResponseWriter, r *http.Request) {
-	apiutil.WriteResponse(w, repositories.Repositories)
-}
-
-func RepositoriesHandler(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case "OPTIONS":
-		EmptyOkHandler(w, r)
-	case "GET":
-		GetRepository(w, r)
-	default:
-		NotFoundHandler(w, r)
-	}
-}
-
-func GetRepository(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Path[len("/repositories/"):]
-
-	for _, r := range repositories.Repositories {
-		if r.GetId() == id {
-			apiutil.WriteResponse(w, r)
-			return
-		}
-	}
-	NotFoundHandler(w, r)
 }
 
 func FullTreeHandler(w http.ResponseWriter, r *http.Request) {
