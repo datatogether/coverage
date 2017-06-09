@@ -25,6 +25,9 @@ const (
 //
 // configuration is read at startup and cannot be alterd without restarting the server.
 type config struct {
+	// develop/production/test
+	Mode string
+
 	// port to listen on, will be read from PORT env variable if present.
 	Port string
 
@@ -62,7 +65,7 @@ type config struct {
 
 // initConfig pulls configuration from config.json
 func initConfig(mode string) (cfg *config, err error) {
-	cfg = &config{}
+	cfg = &config{Mode: mode}
 
 	if path := configFilePath(mode, cfg); path != "" {
 		log.Infof("loading config file: %s", filepath.Base(path))

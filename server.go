@@ -48,10 +48,12 @@ func main() {
 	}
 
 	go func() {
+		log.Infoln("connecting to db")
 		if err := sqlutil.ConnectToDb("postgres", cfg.PostgresDbUrl, appDB); err != nil {
 			log.Infoln(err.Error())
 			return
 		}
+		log.Infoln("connected to db")
 		update(appDB)
 	}()
 	go listenRpc()
@@ -61,7 +63,7 @@ func main() {
 	s.Handler = NewServerRoutes()
 
 	// fire it up!
-	fmt.Println("starting server on port", cfg.Port)
+	log.Infof("starting server on port %s in %s mode\n", cfg.Port, cfg.Mode)
 
 	// start server wrapped in a log.Fatal b/c http.ListenAndServe will not
 	// return unless there's an error
