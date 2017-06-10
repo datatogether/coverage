@@ -19,7 +19,6 @@ func listenRpc() error {
 		log.Infof("register RPC Coverage error: %s", err)
 		return err
 	}
-
 	if err := rpc.Register(RepositoryRequests); err != nil {
 		log.Infof("register RPC Repositories error: %s", err)
 		return err
