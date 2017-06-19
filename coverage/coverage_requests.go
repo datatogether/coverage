@@ -1,8 +1,11 @@
 package coverage
 
 import (
+	"fmt"
 	"github.com/archivers-space/archive"
 	"github.com/archivers-space/coverage/tree"
+	"net/url"
+	"strings"
 )
 
 type CoverageRequests int
@@ -28,17 +31,28 @@ func (CoverageRequests) Tree(p *CoverageTreeParams, res *tree.Node) error {
 		return err
 	}
 
+	if p.Root != "" {
+		u, err := url.Parse(p.Root)
+		if err != nil {
+			return err
+		}
+		if u.Scheme == "" {
+			u.Scheme = "http"
+		}
+
+		// node = node.Child(u.Scheme).Child(u.Host)
+		root = root.Child(fmt.Sprintf("%s://%s", u.Scheme, u.Host))
+		components := strings.Split(u.Path, "/")
+		for _, c := range components {
+			if c != "" {
+				root = root.Child(c)
+			}
+		}
+	}
+
 	if p.Depth != 0 {
 		root = tree.CopyToDepth(root, p.Depth)
 	}
-
-	// node = node.Child(u.Scheme).Child(u.Host)
-	// components := strings.Split(u.Path, "/")
-	// for _, c := range components {
-	// 	if c != "" {
-	// 		node = node.Child(c)
-	// 	}
-	// }
 
 	*res = *root
 	return nil
@@ -46,7 +60,8 @@ func (CoverageRequests) Tree(p *CoverageTreeParams, res *tree.Node) error {
 
 type CoverageSummaryParams struct {
 	// root url to work from
-	Root string
+	// TODO - support root param
+	// Root string
 	// patterns to filter results against, optional
 	Patterns []string
 	// ids of repositories to limit query to, default is all
