@@ -39,7 +39,7 @@ func (s *repository) AddCompletions(t *tree.Node) {
 	})
 }
 
-func (s *repository) AddUrls(t *tree.Node, src *archive.Source) error {
+func (s *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
 	rawData, err := ioutil.ReadFile("repositories/ia/ia_urls.json")
 	if err != nil {
 		return err
@@ -69,8 +69,16 @@ func (s *repository) AddUrls(t *tree.Node, src *archive.Source) error {
 		}
 
 		// skip this url if it doesn't match the passed in Source filter
-		if src != nil && !src.MatchesUrl(u.String()) {
-			continue
+		if len(sources) > 0 {
+			match := false
+			for _, src := range sources {
+				if src != nil && src.MatchesUrl(u.String()) {
+					match = true
+				}
+			}
+			if !match {
+				continue
+			}
 		}
 
 		node = node.Child(u.Scheme).Child(u.Host)

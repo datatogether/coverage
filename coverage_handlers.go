@@ -5,6 +5,7 @@ import (
 	"github.com/archivers-space/coverage/coverage"
 	"github.com/archivers-space/coverage/tree"
 	"net/http"
+	"strings"
 )
 
 // Concrete CoverateRequests instance
@@ -23,7 +24,7 @@ func CoverageHandler(w http.ResponseWriter, r *http.Request) {
 
 func CoverageSummaryHandler(w http.ResponseWriter, r *http.Request) {
 	args := &coverage.CoverageSummaryParams{
-		Pattern: r.FormValue("pattern"),
+		Patterns: strings.Split(r.FormValue("patterns"), ","),
 	}
 
 	res := &coverage.Summary{}
@@ -49,7 +50,7 @@ func CoverageTreeHandler(w http.ResponseWriter, r *http.Request) {
 
 func GetCoverageTreeHandler(w http.ResponseWriter, r *http.Request) {
 	args := &coverage.CoverageTreeParams{
-		Pattern: r.FormValue("pattern"),
+		Patterns: strings.Split(r.FormValue("patterns"), ","),
 	}
 	res := &tree.Node{}
 	err := CoverageRequests.Tree(args, res)

@@ -19,7 +19,7 @@ type Repository interface {
 // A Coverage Repository is any service that can also provide coverage information
 type CoverageRepository interface {
 	Repository
-	AddUrls(tree *tree.Node, src *archive.Source) error
+	AddUrls(tree *tree.Node, sources ...*archive.Source) error
 	AddCoverage(tree *tree.Node)
 	// UrlCoverage(rawurl string) (*tree.Coverage, error)
 }

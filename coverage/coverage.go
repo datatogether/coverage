@@ -93,14 +93,20 @@ func NewCoverageGenerator() *CoverageGenerator {
 	return &CoverageGenerator{}
 }
 
-func (c CoverageGenerator) Tree(src *archive.Source) (*tree.Node, error) {
+func (c CoverageGenerator) Tree(sources ...*archive.Source) (*tree.Node, error) {
 	t := &tree.Node{
-		Name: src.Title,
-		Id:   src.Id,
+		Name: "coverage",
+		Id:   "root",
+	}
+
+	if len(sources) == 1 {
+		// TODO - should this be like this?
+		t.Name = sources[0].Title
+		t.Id = sources[0].Id
 	}
 
 	for _, s := range repositories.Repositories {
-		if err := s.AddUrls(t, src); err != nil {
+		if err := s.AddUrls(t, sources...); err != nil {
 			// log.Info(s.Info()["Name"])
 			// log.Info(err.Error())
 		}
@@ -135,8 +141,8 @@ type Summary struct {
 	Descendants int
 }
 
-func (c CoverageGenerator) Summary(src *archive.Source) (*Summary, error) {
-	t, err := c.Tree(src)
+func (c CoverageGenerator) Summary(sources ...*archive.Source) (*Summary, error) {
+	t, err := c.Tree(sources...)
 	if err != nil {
 		return nil, err
 	}

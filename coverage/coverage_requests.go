@@ -8,7 +8,7 @@ import (
 type CoverageRequests int
 
 type CoverageTreeParams struct {
-	Pattern string
+	Patterns []string
 }
 
 func (p *CoverageTreeParams) Validate() error {
@@ -16,7 +16,11 @@ func (p *CoverageTreeParams) Validate() error {
 }
 
 func (CoverageRequests) Tree(p *CoverageTreeParams, res *tree.Node) error {
-	root, err := NewCoverageGenerator().Tree(&archive.Source{Url: p.Pattern})
+	sources := make([]*archive.Source, len(p.Patterns))
+	for i, p := range p.Patterns {
+		sources[i] = &archive.Source{Url: p}
+	}
+	root, err := NewCoverageGenerator().Tree(sources...)
 	if err != nil {
 		return err
 	}
@@ -26,7 +30,7 @@ func (CoverageRequests) Tree(p *CoverageTreeParams, res *tree.Node) error {
 }
 
 type CoverageSummaryParams struct {
-	Pattern string
+	Patterns []string
 }
 
 func (p *CoverageSummaryParams) Validate() error {
@@ -34,7 +38,11 @@ func (p *CoverageSummaryParams) Validate() error {
 }
 
 func (CoverageRequests) Summary(p *CoverageSummaryParams, res *Summary) error {
-	summary, err := NewCoverageGenerator().Summary(&archive.Source{Url: p.Pattern})
+	sources := make([]*archive.Source, len(p.Patterns))
+	for i, p := range p.Patterns {
+		sources[i] = &archive.Source{Url: p}
+	}
+	summary, err := NewCoverageGenerator().Summary(sources...)
 	if err != nil {
 		return err
 	}
