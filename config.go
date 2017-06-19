@@ -47,6 +47,9 @@ type config struct {
 	// should be true in production
 	TLS bool
 
+	// Weather or not to run cron updates
+	RunCron bool
+
 	// setting HTTP_AUTH_USERNAME & HTTP_AUTH_PASSWORD
 	// will enable basic http auth for the server. This is a single
 	// username & password that must be passed in with every request.

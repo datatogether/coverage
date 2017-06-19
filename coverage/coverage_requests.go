@@ -40,7 +40,6 @@ func (CoverageRequests) Tree(p *CoverageTreeParams, res *tree.Node) error {
 			u.Scheme = "http"
 		}
 
-		// node = node.Child(u.Scheme).Child(u.Host)
 		root = root.Child(fmt.Sprintf("%s://%s", u.Scheme, u.Host))
 		components := strings.Split(u.Path, "/")
 		for _, c := range components {

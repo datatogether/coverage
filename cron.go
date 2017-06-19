@@ -29,15 +29,17 @@ func cron() (stop chan (bool)) {
 }
 
 func update(db *sql.DB) error {
-	lastUpdate = time.Now()
-	log.Info("updating:", lastUpdate)
+	if cfg.RunCron {
+		lastUpdate = time.Now()
+		log.Info("updating:", lastUpdate)
 
-	if err := calcSourceCoverage(db); err != nil {
-		return err
-	}
+		if err := calcSourceCoverage(db); err != nil {
+			return err
+		}
 
-	if err := calcPrimerSourceCoverage(db); err != nil {
-		return err
+		if err := calcPrimerSourceCoverage(db); err != nil {
+			return err
+		}
 	}
 
 	return nil
