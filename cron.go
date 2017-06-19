@@ -44,7 +44,7 @@ func update(db *sql.DB) error {
 }
 
 func calcSourceCoverage(db *sql.DB) error {
-	cvg := coverage.NewCoverageGenerator()
+	cvg := coverage.NewCoverageGenerator(nil, nil)
 	pageSize := 100
 
 	count, err := archive.CountSources(appDB)
@@ -60,7 +60,7 @@ func calcSourceCoverage(db *sql.DB) error {
 		}
 
 		for _, s := range sources {
-			summary, err := cvg.Summary(s)
+			summary, err := cvg.Summary()
 			if err != nil {
 				return err
 			}

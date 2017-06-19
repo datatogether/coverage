@@ -8,10 +8,10 @@ import (
 
 // Node is a url component in the coverage tree
 type Node struct {
-	Id                     string      `json:"id"`
+	Id                     string      `json:"-"`
 	Name                   string      `json:"name"`
-	NumDescendants         int         `json:"numDescendants,omitempty"`
-	NumDescendantsArchived int         `json:"numDescendantsArchived,omitempty"`
+	NumDescendants         int         `json:"-"`
+	NumDescendantsArchived int         `json:"-"`
 	NumLeaves              int         `json:"numLeaves,omitempty"`
 	NumLeavesArchived      int         `json:"numLeavesArchived,omitempty"`
 	NumChildren            int         `json:"numChildren,omitempty"`

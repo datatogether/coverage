@@ -2,6 +2,7 @@ package archivers_space
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/archivers-space/archive"
 	"github.com/archivers-space/coverage/tree"
 	"io/ioutil"
@@ -68,7 +69,7 @@ func (s *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
 			}
 		}
 
-		node = node.Child(u.Scheme).Child(u.Host)
+		node = node.Child(fmt.Sprintf("%s://%s", u.Scheme, u.Host))
 		components := strings.Split(u.Path, "/")
 
 		for _, c := range components {
@@ -107,6 +108,7 @@ func (s *repository) AddCoverage(t *tree.Node) {
 								return
 							}
 						}
+						an.Archived = true
 						an.Coverage = append(an.Coverage, &tree.Coverage{
 							RepositoryId: s.Id,
 							Archived:     true,

@@ -5,6 +5,7 @@ import (
 	"github.com/archivers-space/coverage/coverage"
 	"github.com/archivers-space/coverage/tree"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
@@ -25,6 +26,7 @@ func CoverageHandler(w http.ResponseWriter, r *http.Request) {
 func CoverageSummaryHandler(w http.ResponseWriter, r *http.Request) {
 	args := &coverage.CoverageSummaryParams{
 		Patterns: strings.Split(r.FormValue("patterns"), ","),
+		RepoIds:  strings.Split(r.FormValue("repos"), ","),
 	}
 
 	res := &coverage.Summary{}
@@ -49,11 +51,19 @@ func CoverageTreeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetCoverageTreeHandler(w http.ResponseWriter, r *http.Request) {
+	depth, err := strconv.ParseInt(r.FormValue("depth"), 10, 0)
+	if err != nil {
+		depth = 0
+	}
+
 	args := &coverage.CoverageTreeParams{
+		Root:     r.FormValue("root"),
+		Depth:    int(depth),
 		Patterns: strings.Split(r.FormValue("patterns"), ","),
+		RepoIds:  strings.Split(r.FormValue("repos"), ","),
 	}
 	res := &tree.Node{}
-	err := CoverageRequests.Tree(args, res)
+	err = CoverageRequests.Tree(args, res)
 	if err != nil {
 		log.Info(err.Error())
 		apiutil.WriteErrResponse(w, http.StatusInternalServerError, err)

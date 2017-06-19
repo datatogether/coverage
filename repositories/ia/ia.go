@@ -2,6 +2,7 @@ package ia
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/archivers-space/archive"
 	"github.com/archivers-space/coverage/tree"
 	"io/ioutil"
@@ -81,7 +82,8 @@ func (s *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
 			}
 		}
 
-		node = node.Child(u.Scheme).Child(u.Host)
+		// node = node.Child(u.Scheme).Child(u.Host)
+		node = node.Child(fmt.Sprintf("%s://%s", u.Scheme, u.Host))
 		components := strings.Split(u.Path, "/")
 
 		for _, c := range components {
@@ -98,6 +100,7 @@ func (s *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
 			}
 		}
 
+		node.Archived = node.Archived || i.Available
 		node.Coverage = append(node.Coverage, &tree.Coverage{
 			RepositoryId: s.Id,
 			Archived:     i.Available,
