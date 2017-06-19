@@ -7,6 +7,7 @@ import (
 	"github.com/archivers-space/coverage/tree"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -29,7 +30,7 @@ func (r *repository) DataRepo() *archive.DataRepo {
 }
 
 func (s *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
-	f, err := os.Open("repositories/svalbard/svalbard_urls.txt")
+	f, err := os.Open(filepath.Join(os.Getenv("GOPATH"), "src/github.com/archivers-space/coverage", "repositories/svalbard/svalbard_urls.txt"))
 	if err != nil {
 		return err
 	}

@@ -7,6 +7,7 @@ import (
 	"github.com/archivers-space/coverage/tree"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -46,7 +47,7 @@ func (a *repository) AddCoverage(t *tree.Node) {
 }
 
 func (a *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
-	f, err := os.Open("repositories/archivers2/archivers_2_downloaded_epa_content_urls.txt")
+	f, err := os.Open(filepath.Join(os.Getenv("GOPATH"), "src/github.com/archivers-space/coverage", "repositories/archivers2/archivers_2_downloaded_epa_content_urls.txt"))
 	if err != nil {
 		return err
 	}

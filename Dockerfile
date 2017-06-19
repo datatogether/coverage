@@ -15,6 +15,3 @@ ADD . /go/src/github.com/archivers-space/coverage
 RUN go install github.com/archivers-space/coverage
 # Set binary as entrypoint
 ENTRYPOINT /go/bin/coverage
-
-
-

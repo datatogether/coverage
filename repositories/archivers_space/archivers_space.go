@@ -7,6 +7,8 @@ import (
 	"github.com/archivers-space/coverage/tree"
 	"io/ioutil"
 	"net/url"
+	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -29,7 +31,7 @@ func (r *repository) DataRepo() *archive.DataRepo {
 }
 
 func (s *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
-	rawData, err := ioutil.ReadFile("repositories/archivers_space/archivers.space_urls.json")
+	rawData, err := ioutil.ReadFile(filepath.Join(os.Getenv("GOPATH"), "src/github.com/archivers-space/coverage", "repositories/archivers_space/archivers.space_urls.json"))
 	if err != nil {
 		return err
 	}

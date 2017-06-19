@@ -1,7 +1,6 @@
 package coverage
 
 import (
-	"fmt"
 	"github.com/archivers-space/archive"
 	"github.com/archivers-space/coverage/repositories"
 	"github.com/archivers-space/coverage/tree"
@@ -134,12 +133,11 @@ func (c CoverageGenerator) Tree() (*tree.Node, error) {
 	// 	t.Id = c.Sources[0].Id
 	// }
 
-	fmt.Println(c.Repos)
-
 	for _, s := range c.Repos {
 		if err := s.AddUrls(t, c.Sources...); err != nil {
 			// log.Info(s.Info()["Name"])
 			// log.Info(err.Error())
+			return nil, err
 		}
 
 		s.AddCoverage(t)

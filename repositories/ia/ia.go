@@ -7,6 +7,8 @@ import (
 	"github.com/archivers-space/coverage/tree"
 	"io/ioutil"
 	"net/url"
+	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -41,7 +43,7 @@ func (s *repository) AddCompletions(t *tree.Node) {
 }
 
 func (s *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
-	rawData, err := ioutil.ReadFile("repositories/ia/ia_urls.json")
+	rawData, err := ioutil.ReadFile(filepath.Join(os.Getenv("GOPATH"), "src/github.com/archivers-space/coverage", "repositories/ia/ia_urls.json"))
 	if err != nil {
 		return err
 	}

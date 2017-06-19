@@ -7,6 +7,8 @@ import (
 	"github.com/archivers-space/coverage/tree"
 	"io/ioutil"
 	"net/url"
+	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -29,7 +31,7 @@ func (r *repository) DataRepo() *archive.DataRepo {
 }
 
 func (s *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
-	rawData, err := ioutil.ReadFile("repositories/eot/nomination_tool_epa_primer_uncrawlables.json")
+	rawData, err := ioutil.ReadFile(filepath.Join(os.Getenv("GOPATH"), "src/github.com/archivers-space/coverage", "repositories/eot/nomination_tool_epa_primer_uncrawlables.json"))
 	if err != nil {
 		return err
 	}
