@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"fmt"
 	"github.com/archivers-space/archive"
 	"github.com/archivers-space/errors"
 )
@@ -15,7 +14,6 @@ type RepositoryListParams struct {
 }
 
 func (r RepositoryRequests) List(p *RepositoryListParams, res *[]*archive.DataRepo) error {
-	fmt.Println("list repositories", p)
 	repos := make([]*archive.DataRepo, len(Repositories))
 	for i, repo := range Repositories {
 		repos[i] = repo.DataRepo()
@@ -30,7 +28,6 @@ type RepositoryGetParams struct {
 }
 
 func (r RepositoryRequests) Get(p *RepositoryGetParams, res *archive.DataRepo) error {
-	fmt.Println("get repository", p.Id)
 	for _, repo := range Repositories {
 		if repo.GetId() == p.Id {
 			*res = *repo.DataRepo()
