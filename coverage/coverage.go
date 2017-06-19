@@ -104,7 +104,7 @@ func NewCoverageGenerator(repoIds []string, patterns []string) *CoverageGenerato
 	}
 
 	repos := repositories.Repositories
-	if repoIds != nil {
+	if len(repoIds) > 0 {
 		r := []repositories.CoverageRepository{}
 		for _, id := range repoIds {
 			for _, repo := range repos {
