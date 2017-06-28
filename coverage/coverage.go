@@ -1,9 +1,9 @@
 package coverage
 
 import (
-	"github.com/archivers-space/archive"
-	"github.com/archivers-space/coverage/repositories"
-	"github.com/archivers-space/coverage/tree"
+	"github.com/datatogether/archive"
+	"github.com/datatogether/coverage/repositories"
+	"github.com/datatogether/coverage/tree"
 
 	"encoding/json"
 	"io/ioutil"

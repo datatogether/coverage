@@ -3,8 +3,8 @@ package archivers2
 import (
 	"bufio"
 	"fmt"
-	"github.com/archivers-space/archive"
-	"github.com/archivers-space/coverage/tree"
+	"github.com/datatogether/archive"
+	"github.com/datatogether/coverage/tree"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -47,7 +47,7 @@ func (a *repository) AddCoverage(t *tree.Node) {
 }
 
 func (a *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
-	f, err := os.Open(filepath.Join(os.Getenv("GOPATH"), "src/github.com/archivers-space/coverage", "repositories/archivers2/archivers_2_downloaded_epa_content_urls.txt"))
+	f, err := os.Open(filepath.Join(os.Getenv("GOPATH"), "src/github.com/datatogether/coverage", "repositories/archivers2/archivers_2_downloaded_epa_content_urls.txt"))
 	if err != nil {
 		return err
 	}

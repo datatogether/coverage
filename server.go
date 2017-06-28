@@ -7,8 +7,10 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/archivers-space/coverage/tree"
-	"github.com/archivers-space/sqlutil"
+	"github.com/datatogether/archive"
+	"github.com/datatogether/coverage/tree"
+	"github.com/datatogether/sql_datastore"
+	"github.com/datatogether/sqlutil"
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -23,11 +25,15 @@ var (
 	// log output handled by logrus package
 	log = logrus.New()
 
+	// our main t node
+	// TODO - remove this
+	t = &tree.Node{}
+
 	// application database connection
 	appDB = &sql.DB{}
 
-	// our main t node
-	t = &tree.Node{}
+	// hoist standard datastore
+	store = sql_datastore.DefaultStore
 )
 
 func init() {
@@ -54,6 +60,11 @@ func main() {
 			return
 		}
 		log.Infoln("connected to db")
+		sql_datastore.SetDB(appDB)
+		sql_datastore.Register(
+			&archive.Source{},
+			&archive.Primer{},
+		)
 		update(appDB)
 	}()
 	go listenRpc()

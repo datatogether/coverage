@@ -2,8 +2,8 @@ package main
 
 import (
 	"database/sql"
-	"github.com/archivers-space/archive"
-	"github.com/archivers-space/coverage/coverage"
+	"github.com/datatogether/archive"
+	"github.com/datatogether/coverage/coverage"
 	"time"
 )
 
@@ -56,7 +56,7 @@ func calcSourceCoverage(db *sql.DB) error {
 
 	numPages := count / pageSize
 	for page := 0; page <= numPages; page++ {
-		sources, err := archive.ListSources(db, pageSize, pageSize*page)
+		sources, err := archive.ListSources(store, pageSize, pageSize*page)
 		if err != nil {
 			return err
 		}
@@ -75,7 +75,7 @@ func calcSourceCoverage(db *sql.DB) error {
 				s.Stats.ArchivedUrlCount = summary.Archived
 				s.Stats.UrlCount = summary.Descendants
 				log.Infof("updating source: %s - %s: %f%%", s.Id, s.Title, float32(summary.Archived)/float32(summary.Descendants)*100)
-				if err := s.Save(db); err != nil {
+				if err := s.Save(store); err != nil {
 					return err
 				}
 			}
@@ -95,7 +95,7 @@ func calcPrimerSourceCoverage(db *sql.DB) error {
 
 	numPages := int(count) / pageSize
 	for page := 0; page <= numPages; page++ {
-		primers, err := archive.ListPrimers(db, pageSize, pageSize*page)
+		primers, err := archive.ListPrimers(store, pageSize, pageSize*page)
 		if err != nil {
 			return err
 		}
@@ -123,7 +123,7 @@ func calcPrimerSourceCoverage(db *sql.DB) error {
 				p.Stats.SourcesUrlCount = urlCount
 				p.Stats.SourcesArchivedUrlCount = archivedCount
 				log.Infof("updating primer sources: %s - %s: %f%%", p.Id, p.ShortTitle, float32(p.Stats.SourcesArchivedUrlCount)/float32(p.Stats.SourcesUrlCount)*100)
-				if err := p.Save(appDB); err != nil {
+				if err := p.Save(store); err != nil {
 					return err
 				}
 			}

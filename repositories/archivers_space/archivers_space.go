@@ -3,8 +3,8 @@ package archivers_space
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/archivers-space/archive"
-	"github.com/archivers-space/coverage/tree"
+	"github.com/datatogether/archive"
+	"github.com/datatogether/coverage/tree"
 	"io/ioutil"
 	"net/url"
 	"os"
@@ -31,7 +31,7 @@ func (r *repository) DataRepo() *archive.DataRepo {
 }
 
 func (s *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
-	rawData, err := ioutil.ReadFile(filepath.Join(os.Getenv("GOPATH"), "src/github.com/archivers-space/coverage", "repositories/archivers_space/archivers.space_urls.json"))
+	rawData, err := ioutil.ReadFile(filepath.Join(os.Getenv("GOPATH"), "src/github.com/datatogether/coverage", "repositories/archivers_space/archivers.space_urls.json"))
 	if err != nil {
 		return err
 	}

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/archivers-space/api/apiutil"
-	"github.com/archivers-space/coverage/tree"
-	"github.com/archivers-space/errors"
+	"github.com/datatogether/api/apiutil"
+	"github.com/datatogether/coverage/tree"
+	"github.com/datatogether/errors"
 	"io"
 	"net/http"
 )

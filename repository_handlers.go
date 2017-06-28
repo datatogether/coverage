@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/archivers-space/api/apiutil"
-	"github.com/archivers-space/coverage/repositories"
+	"github.com/datatogether/api/apiutil"
+	"github.com/datatogether/coverage/repositories"
 	"net/http"
 )
 

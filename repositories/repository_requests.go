@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"github.com/archivers-space/archive"
-	"github.com/archivers-space/errors"
+	"github.com/datatogether/archive"
+	"github.com/datatogether/errors"
 )
 
 type RepositoryRequests int

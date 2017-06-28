@@ -1,13 +1,13 @@
 package repositories
 
 import (
-	"github.com/archivers-space/archive"
-	"github.com/archivers-space/coverage/repositories/archivers2"
-	"github.com/archivers-space/coverage/repositories/archivers_space"
-	"github.com/archivers-space/coverage/repositories/eot"
-	"github.com/archivers-space/coverage/repositories/ia"
-	"github.com/archivers-space/coverage/repositories/svalbard"
-	"github.com/archivers-space/coverage/tree"
+	"github.com/datatogether/archive"
+	"github.com/datatogether/coverage/repositories/archivers2"
+	"github.com/datatogether/coverage/repositories/archivers_space"
+	"github.com/datatogether/coverage/repositories/eot"
+	"github.com/datatogether/coverage/repositories/ia"
+	"github.com/datatogether/coverage/repositories/svalbard"
+	"github.com/datatogether/coverage/tree"
 )
 
 // a Repository is anything that stores data.

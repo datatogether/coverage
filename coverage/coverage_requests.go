@@ -2,8 +2,8 @@ package coverage
 
 import (
 	"fmt"
-	"github.com/archivers-space/archive"
-	"github.com/archivers-space/coverage/tree"
+	"github.com/datatogether/archive"
+	"github.com/datatogether/coverage/tree"
 	"net/url"
 	"strings"
 )
