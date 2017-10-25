@@ -2,7 +2,7 @@ package coverage
 
 import (
 	"fmt"
-	"github.com/datatogether/archive"
+	"github.com/datatogether/core"
 	"github.com/datatogether/coverage/tree"
 	"net/url"
 	"strings"
@@ -72,9 +72,9 @@ func (p *CoverageSummaryParams) Validate() error {
 }
 
 func (CoverageRequests) Summary(p *CoverageSummaryParams, res *Summary) error {
-	sources := make([]*archive.Source, len(p.Patterns))
+	sources := make([]*core.Source, len(p.Patterns))
 	for i, p := range p.Patterns {
-		sources[i] = &archive.Source{Url: p}
+		sources[i] = &core.Source{Url: p}
 	}
 	summary, err := NewCoverageGenerator(p.RepoIds, p.Patterns).Summary()
 	if err != nil {

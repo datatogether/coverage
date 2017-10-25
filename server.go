@@ -7,7 +7,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/datatogether/archive"
+	"github.com/datatogether/core"
 	"github.com/datatogether/coverage/tree"
 	"github.com/datatogether/sql_datastore"
 	"github.com/datatogether/sqlutil"
@@ -62,8 +62,8 @@ func main() {
 		log.Infoln("connected to db")
 		sql_datastore.SetDB(appDB)
 		sql_datastore.Register(
-			&archive.Source{},
-			&archive.Primer{},
+			&core.Source{},
+			&core.Primer{},
 		)
 		update(appDB)
 	}()

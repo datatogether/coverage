@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"github.com/datatogether/archive"
+	"github.com/datatogether/core"
 	"github.com/datatogether/errors"
 )
 
@@ -13,8 +13,8 @@ type RepositoryListParams struct {
 	Offset  int
 }
 
-func (r RepositoryRequests) List(p *RepositoryListParams, res *[]*archive.DataRepo) error {
-	repos := make([]*archive.DataRepo, len(Repositories))
+func (r RepositoryRequests) List(p *RepositoryListParams, res *[]*core.DataRepo) error {
+	repos := make([]*core.DataRepo, len(Repositories))
 	for i, repo := range Repositories {
 		repos[i] = repo.DataRepo()
 	}
@@ -27,7 +27,7 @@ type RepositoryGetParams struct {
 	Name string
 }
 
-func (r RepositoryRequests) Get(p *RepositoryGetParams, res *archive.DataRepo) error {
+func (r RepositoryRequests) Get(p *RepositoryGetParams, res *core.DataRepo) error {
 	for _, repo := range Repositories {
 		if repo.GetId() == p.Id {
 			*res = *repo.DataRepo()

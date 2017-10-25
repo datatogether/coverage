@@ -3,7 +3,7 @@ package archivers_space
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/datatogether/archive"
+	"github.com/datatogether/core"
 	"github.com/datatogether/coverage/tree"
 	"io/ioutil"
 	"net/url"
@@ -19,18 +19,18 @@ var Repository = &repository{
 	Url:         "https://www.archivers.space",
 }
 
-type repository archive.DataRepo
+type repository core.DataRepo
 
 func (s *repository) GetId() string {
 	return s.Id
 }
 
-func (r *repository) DataRepo() *archive.DataRepo {
-	dr := archive.DataRepo(*r)
+func (r *repository) DataRepo() *core.DataRepo {
+	dr := core.DataRepo(*r)
 	return &dr
 }
 
-func (s *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
+func (s *repository) AddUrls(t *tree.Node, sources ...*core.Source) error {
 	rawData, err := ioutil.ReadFile(filepath.Join(os.Getenv("GOPATH"), "src/github.com/datatogether/coverage", "repositories/archivers_space/archivers.space_urls.json"))
 	if err != nil {
 		return err

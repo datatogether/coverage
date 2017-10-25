@@ -1,7 +1,7 @@
 package coverage
 
 import (
-	"github.com/datatogether/archive"
+	"github.com/datatogether/core"
 	"github.com/datatogether/coverage/repositories"
 	"github.com/datatogether/coverage/tree"
 
@@ -86,18 +86,18 @@ func WriteTreeCache(filename string, n *tree.Node) error {
 type CoverageGenerator struct {
 	// Root    url.Url
 	// Depth   int
-	Sources []*archive.Source
+	Sources []*core.Source
 	Repos   []repositories.CoverageRepository
 }
 
 // NewCoverageGenerator creates a CoverageGenerator with the default
 // properties
 func NewCoverageGenerator(repoIds []string, patterns []string) *CoverageGenerator {
-	var sources []*archive.Source
+	var sources []*core.Source
 	if patterns != nil {
-		sources := make([]*archive.Source, len(patterns))
+		sources := make([]*core.Source, len(patterns))
 		for i, pattern := range patterns {
-			sources[i] = &archive.Source{
+			sources[i] = &core.Source{
 				Url: pattern,
 			}
 		}

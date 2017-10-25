@@ -2,7 +2,7 @@ package main
 
 import (
 	"database/sql"
-	"github.com/datatogether/archive"
+	"github.com/datatogether/core"
 	"github.com/datatogether/coverage/coverage"
 	"time"
 )
@@ -49,14 +49,14 @@ func calcSourceCoverage(db *sql.DB) error {
 	cvg := coverage.NewCoverageGenerator(nil, nil)
 	pageSize := 100
 
-	count, err := archive.CountSources(appDB)
+	count, err := core.CountSources(appDB)
 	if err != nil {
 		return err
 	}
 
 	numPages := count / pageSize
 	for page := 0; page <= numPages; page++ {
-		sources, err := archive.ListSources(store, pageSize, pageSize*page)
+		sources, err := core.ListSources(store, pageSize, pageSize*page)
 		if err != nil {
 			return err
 		}
@@ -68,7 +68,7 @@ func calcSourceCoverage(db *sql.DB) error {
 			}
 
 			if s.Stats == nil {
-				s.Stats = &archive.SourceStats{}
+				s.Stats = &core.SourceStats{}
 			}
 
 			if s.Stats.ArchivedUrlCount != summary.Archived {
@@ -88,14 +88,14 @@ func calcSourceCoverage(db *sql.DB) error {
 func calcPrimerSourceCoverage(db *sql.DB) error {
 	pageSize := 100
 
-	count, err := archive.CountPrimers(appDB)
+	count, err := core.CountPrimers(appDB)
 	if err != nil {
 		return err
 	}
 
 	numPages := int(count) / pageSize
 	for page := 0; page <= numPages; page++ {
-		primers, err := archive.ListPrimers(store, pageSize, pageSize*page)
+		primers, err := core.ListPrimers(store, pageSize, pageSize*page)
 		if err != nil {
 			return err
 		}
@@ -116,7 +116,7 @@ func calcPrimerSourceCoverage(db *sql.DB) error {
 			}
 
 			if p.Stats == nil {
-				p.Stats = &archive.PrimerStats{}
+				p.Stats = &core.PrimerStats{}
 			}
 
 			if p.Stats.SourcesUrlCount != urlCount || p.Stats.SourcesArchivedUrlCount != archivedCount {
@@ -133,7 +133,7 @@ func calcPrimerSourceCoverage(db *sql.DB) error {
 }
 
 // TODO - finish
-func calcPrimerCoverage(db *sql.DB, primers []*archive.Primer) error {
+func calcPrimerCoverage(db *sql.DB, primers []*core.Primer) error {
 	for _, primer := range primers {
 		if err := primer.ReadSubPrimers(db); err != nil {
 			return err
