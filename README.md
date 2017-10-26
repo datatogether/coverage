@@ -1,7 +1,5 @@
 # Coverage
 
-<!-- Repo Badges for: Github Project, Slack, License-->
-
 [![GitHub](https://img.shields.io/badge/project-Data_Together-487b57.svg?style=flat-square)](http://github.com/datatogether)
 [![Slack](https://img.shields.io/badge/slack-Archivers-b44e88.svg?style=flat-square)](https://archivers-slack.herokuapp.com/)
 [![License](https://img.shields.io/github/license/datatogether/coverage.svg)](./LICENSE)
@@ -40,6 +38,10 @@ We would love involvement from more people! If you notice any errors or would li
 
 We use GitHub issues for [tracking bugs and feature requests](./issues) and Pull Requests (PRs) for [submitting changes](./pulls)
 
-## Development
+## Installation
 
-[Step-by-step instructions about how to set up a local dev environment and any dependencies]
+The easiest way to get going is to use [docker-compose](https://docs.docker.com/compose/install/). Once you have that:
+
+TODO - finish installation instructions
+
+## Development
