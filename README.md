@@ -23,7 +23,7 @@ Actual source datasets can be found in the `/repositories` directory. It current
 
 Copyright (C) 2017 Data Together
 This program is free software: you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
+the terms of the GNU Affero General Public License as published by the Free Software
 Foundation, version 3.0.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY
@@ -45,3 +45,5 @@ The easiest way to get going is to use [docker-compose](https://docs.docker.com/
 TODO - finish installation instructions
 
 ## Development
+
+Coming soon.
