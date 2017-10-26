@@ -2,8 +2,9 @@
 
 [![GitHub](https://img.shields.io/badge/project-Data_Together-487b57.svg?style=flat-square)](http://github.com/datatogether)
 [![Slack](https://img.shields.io/badge/slack-Archivers-b44e88.svg?style=flat-square)](https://archivers-slack.herokuapp.com/)
-[![License](https://img.shields.io/github/license/datatogether/coverage.svg)](./LICENSE)
+[![License](https://img.shields.io/github/license/datatogether/coverage.svg?style=flat-square)](./LICENSE)
 [![Codecov](https://img.shields.io/codecov/c/github/datatogether/coverage.svg?style=flat-square)](https://codecov.io/gh/datatogether/coverage)
+[![CircleCI](https://img.shields.io/circleci/project/github/datatogether/coverage.svg?style=flat-square)](https://circleci.com/gh/datatogether/coverage)
 
 **Coverage** is a project for visualizing the status of digital data archiving efforts across various data repositories run by different initiatives. Its current scope covers data within the epa.gov top-level domain.
 
