@@ -103,6 +103,8 @@ Barring any changes, you may now visit a JSON endpoint at: `http://localhost:808
 
 Please follow the install instructions above! Inclusion of tests are appreciated!
 
+For a list of all availabe helper commands, just type `make`.
+
 
 ## License & Copyright
 
