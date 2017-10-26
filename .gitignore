@@ -1,6 +1,6 @@
 .DS_Store
 gin-bin
 coverage
-coverage.out
+coverage.txt
 config.*.json
 *.env

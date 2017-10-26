@@ -3,7 +3,7 @@ package svalbard
 import (
 	"bufio"
 	"fmt"
-	"github.com/datatogether/archive"
+	"github.com/datatogether/core"
 	"github.com/datatogether/coverage/tree"
 	"net/url"
 	"os"
@@ -18,18 +18,18 @@ var Repository = &repository{
 	Url:         "",
 }
 
-type repository archive.DataRepo
+type repository core.DataRepo
 
 func (s *repository) GetId() string {
 	return s.Id
 }
 
-func (r *repository) DataRepo() *archive.DataRepo {
-	dr := archive.DataRepo(*r)
+func (r *repository) DataRepo() *core.DataRepo {
+	dr := core.DataRepo(*r)
 	return &dr
 }
 
-func (s *repository) AddUrls(t *tree.Node, sources ...*archive.Source) error {
+func (s *repository) AddUrls(t *tree.Node, sources ...*core.Source) error {
 	f, err := os.Open(filepath.Join(os.Getenv("GOPATH"), "src/github.com/datatogether/coverage", "repositories/svalbard/svalbard_urls.txt"))
 	if err != nil {
 		return err

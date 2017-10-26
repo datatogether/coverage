@@ -1,0 +1,26 @@
+version: '2'
+services:
+  coverage:
+    build: .
+    volumes:
+      - .:/go/src/github.com/datatogether/coverage
+      - ./sql:/sql
+    ports:
+     - 8080:8080
+    networks:
+      - back-tier
+    depends_on:
+      - postgres
+    environment:
+      - PORT=8080
+      - TLS=false
+      - GOLANG_ENV=develop
+      - POSTGRES_DB_URL=postgres://postgres@postgres/postgres?sslmode=disable
+      - RPC_PORT=4400
+  postgres:
+    image: "postgres:9.6-alpine"
+    networks:
+      - back-tier
+
+networks:
+  back-tier:
