@@ -6,7 +6,7 @@ services:
       - .:/go/src/github.com/datatogether/coverage
       - ./sql:/sql
     ports:
-     - 8080:8080
+      - $PORT:8080
     networks:
       - back-tier
     depends_on:
