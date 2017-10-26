@@ -5,6 +5,7 @@
 [![GitHub](https://img.shields.io/badge/project-Data_Together-487b57.svg?style=flat-square)](http://github.com/datatogether)
 [![Slack](https://img.shields.io/badge/slack-Archivers-b44e88.svg?style=flat-square)](https://archivers-slack.herokuapp.com/)
 [![License](https://img.shields.io/github/license/datatogether/coverage.svg)](./LICENSE)
+[![Codecov](https://img.shields.io/codecov/c/github/codecov/example-python.svg?style=flat-square)](https://codecov.io/gh/datatogether/coverage)
 
 Visualization to display "archival coverage," starting with epa.gov. This takes a list of urls and associated archiving information, and turns that into a tree of url paths with associated coverage information.
 
