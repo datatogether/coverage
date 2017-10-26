@@ -1,8 +1,8 @@
 package repositories
 
 import (
+	"fmt"
 	"github.com/datatogether/core"
-	"github.com/datatogether/errors"
 )
 
 type RepositoryRequests int
@@ -34,5 +34,5 @@ func (r RepositoryRequests) Get(p *RepositoryGetParams, res *core.DataRepo) erro
 			return nil
 		}
 	}
-	return errors.ErrNotFound
+	return fmt.Errorf("Not Found")
 }

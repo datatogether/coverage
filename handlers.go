@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/datatogether/api/apiutil"
 	"github.com/datatogether/coverage/tree"
-	"github.com/datatogether/errors"
 	"io"
 	"net/http"
 )
@@ -27,7 +26,7 @@ func NodeHandler(w http.ResponseWriter, r *http.Request) {
 		id := r.URL.Path[len("/tree/"):]
 		node := t.Find(id)
 		if node == nil {
-			apiutil.WriteErrResponse(w, http.StatusNotFound, errors.ErrNotFound)
+			apiutil.WriteErrResponse(w, http.StatusNotFound, ErrNotFound)
 			return
 		}
 		apiutil.WriteResponse(w, tree.CopyToDepth(node, 1))

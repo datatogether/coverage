@@ -148,7 +148,7 @@
 		},
 		{
 			"ImportPath": "github.com/datatogether/api/apiutil",
-			"Rev": "ab14ad16a50a1b05e37c16f71c516ed8c6d4eefc"
+			"Rev": "3dea0e375cc16994e7a95d021a9d1e081f324089"
 		},
 		{
 			"ImportPath": "github.com/datatogether/config",
@@ -157,10 +157,6 @@
 		{
 			"ImportPath": "github.com/datatogether/core",
 			"Rev": "12765f1ecc79bbc36700b57ebc9047044cab6e15"
-		},
-		{
-			"ImportPath": "github.com/datatogether/errors",
-			"Rev": "8bdc2a3f98128fadfafdc392d56f5a2bd5c9c754"
 		},
 		{
 			"ImportPath": "github.com/datatogether/ffi",

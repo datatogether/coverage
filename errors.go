@@ -1,6 +1,6 @@
 // TODO - remove this in favour of either returning a generic "Not Found" string
 // or putting not found in a common package
-package errors
+package main
 
 import (
 	"fmt"
