@@ -10,12 +10,12 @@ services:
       - ./sql:/sql
     ports:
       - "$PORT:$PORT"
-      - "3000:3000"
+      - "55555:55555"
     networks:
       - back-tier
     depends_on:
       - postgres
-    command: gin -i -p 3000 -a $PORT
+    command: gin -i -p 55555 -a $PORT
   postgres:
     image: "postgres:9.6-alpine"
     networks:
