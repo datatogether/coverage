@@ -6,13 +6,13 @@ services:
       - .:/go/src/github.com/datatogether/coverage
       - ./sql:/sql
     ports:
-      - $PORT:8080
+      - $PORT:$PORT
     networks:
       - back-tier
     depends_on:
       - postgres
     environment:
-      - PORT=8080
+      - PORT=$PORT
       - TLS=false
       - GOLANG_ENV=develop
       - POSTGRES_DB_URL=postgres://postgres@postgres/postgres?sslmode=disable
