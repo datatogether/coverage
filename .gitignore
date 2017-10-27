@@ -3,4 +3,4 @@ gin-bin
 coverage
 coverage.txt
 config.*.json
-*.env
+.env
