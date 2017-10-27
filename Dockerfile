@@ -15,10 +15,10 @@ WORKDIR /go/src/github.com/datatogether/coverage
 # Run tests
 RUN go test
 
-# Build the static api binary for production
+# Build the static coverage api binary for production
 RUN CGO_ENABLED=0 GOOS=linux go install -a -installsuffix cgo
 
-# Set binary as the default command
+# Set the coverage binary as the default command
 CMD ["coverage"]
 
 # Start over from an Alpine Linux image as a base
@@ -35,5 +35,5 @@ EXPOSE 8080
 # Copy the binary from the dev stage into a location that is in PATH
 COPY --from=dev /go/bin/coverage /usr/local/bin/
 
-# Set binary as the default command
+# Set the coverage binary as the default command
 CMD ["coverage"]
