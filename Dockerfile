@@ -1,17 +1,39 @@
-FROM golang:latest
+ARG GOLANG_TAG=latest
+ARG ALPINE_TAG=latest
+
+# Build stage with all the development dependencies
+FROM golang:${GOLANG_TAG} AS dev
+
+# Setup gin for dev monitoring
+RUN go-wrapper download github.com/codegangsta/gin
+RUN go-wrapper install github.com/codegangsta/gin
+
+# Copy the local package files into the image's workspace.
+COPY . /go/src/github.com/datatogether/coverage
+WORKDIR /go/src/github.com/datatogether/coverage
+
+# Run tests
+RUN go test
+
+# Build the static api binary
+RUN CGO_ENABLED=0 GOOS=linux go install -a -installsuffix cgo
+
+# Let gin watch and build by default in development environment
+CMD ["gin", "-i"]
+
+# Start over from an Alpine Linux image as a base
+# to create a minumal production image
+FROM alpine:${ALPINE_TAG}
+LABEL repo="https://github.com/datatogether/coverage"
+
+# Add certificates for TLS requests
+RUN apk --no-cache add ca-certificates
+
 # Expose default port
-EXPOSE 3000
+EXPOSE 8080
 
-# gin is for dev monitoring
-# RUN go-wrapper download github.com/codegangsta/gin
-# RUN go-wrapper install github.com/codegangsta/gin
+# Copy the binary from the dev stage into a location that is in PATH
+COPY --from=dev /go/bin/coverage /usr/local/bin/
 
-# Copy the local package files to the container’s workspace.
-ADD . /go/src/github.com/datatogether/coverage
-# WORKDIR /go/src/github.com/datatogether/coverage
-# CMD ["gin", "-i"]
-
-# Install api binary globally within container 
-RUN go install github.com/datatogether/coverage
-# Set binary as entrypoint
-ENTRYPOINT /go/bin/coverage
+# Set binary as the default command
+CMD ["coverage"]
