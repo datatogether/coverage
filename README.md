@@ -78,6 +78,8 @@ If you get an error about a port "address already in use", you can change the `P
 
 Barring any changes, you may now visit a JSON endpoint at: `http://localhost:8080/repositories`
 
+**Note:** Provided `docker-compose.yml` file is optimized for the development environment. Necessary changes should be made in it for production.
+
 ### Local System Install
 
 Running this project directly on your system requires:
@@ -106,8 +108,11 @@ Barring any changes, you may now visit a JSON endpoint at: `http://localhost:808
 
 Please follow the install instructions above! Inclusion of tests are appreciated!
 
-For a list of all availabe helper commands, just type `make`.
+For a list of all available helper commands, just type `make`.
 
+For easier development workflow, the application runs behind [gin](https://github.com/codegangsta/gin) on port `3000`.
+This allows live building and reloading of the server when Go files are modified.
+If for any reason this is an undesired behavior, simply comment out `- "3000:3000"` and `command: gin -i -p 3000 -a $PORT` lines from the `docker-compose.yml` file.
 
 ## License & Copyright
 
