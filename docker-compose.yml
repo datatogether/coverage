@@ -1,22 +1,21 @@
-version: '2'
+version: '2.3'
 services:
   coverage:
-    build: .
+    build:
+      context: .
+      target: dev
+    env_file: .env
     volumes:
       - .:/go/src/github.com/datatogether/coverage
       - ./sql:/sql
     ports:
-      - $PORT:$PORT
+      - "$PORT:$PORT"
+      - "3000:3000"
     networks:
       - back-tier
     depends_on:
       - postgres
-    environment:
-      - PORT=$PORT
-      - TLS=false
-      - GOLANG_ENV=develop
-      - POSTGRES_DB_URL=postgres://postgres@postgres/postgres?sslmode=disable
-      - RPC_PORT=4400
+    command: gin -i -p 3000 -a $PORT
   postgres:
     image: "postgres:9.6-alpine"
     networks:

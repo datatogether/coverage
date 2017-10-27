@@ -15,11 +15,11 @@ WORKDIR /go/src/github.com/datatogether/coverage
 # Run tests
 RUN go test
 
-# Build the static api binary
+# Build the static api binary for production
 RUN CGO_ENABLED=0 GOOS=linux go install -a -installsuffix cgo
 
-# Let gin watch and build by default in development environment
-CMD ["gin", "-i"]
+# Set binary as the default command
+CMD ["coverage"]
 
 # Start over from an Alpine Linux image as a base
 # to create a minumal production image
