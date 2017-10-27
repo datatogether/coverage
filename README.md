@@ -33,6 +33,82 @@ It takes a list of urls and associated archiving information, and turns that int
 The output is cached in [`cache.json`](cache.json). Because this is a large file, we provide incremental pieces of the cached tree as a web server. To dynamically calculate coverage completion to can work with the `cache.json` file.
 
 
+## Routes
+
+* `/healthcheck` - server status
+* `/repositories` - list all data repositories [:question:][route-repos]
+* `/repositories/:repository_uuid` - get details for a single data repository [:question:][route-repo]
+* `/fulltree` - get full coverage tree of url-based resources
+* `/tree` - get scope-able coverage tree [:question:][route-coverage]
+* `/coverage` - get coverage summary (not currently used)
+
+   [route-repos]: http://petstore.swagger.io/?url=https://raw.githubusercontent.com/datatogether/api/master/open_api.yaml#/default/get_repositories
+   [route-repo]: http://petstore.swagger.io/?url=https://raw.githubusercontent.com/datatogether/api/master/open_api.yaml#/default/get_repository__id_
+   [route-coverage]: http://petstore.swagger.io/?url=https://raw.githubusercontent.com/datatogether/api/master/open_api.yaml#/default/get_coverage
+
+
+## Getting Involved
+
+We would love involvement from more people! If you notice any errors or would like to submit changes, please see our [Contributing Guidelines](./github/CONTRIBUTING.md).
+
+We use GitHub issues for [tracking bugs and feature requests](./issues) and Pull Requests (PRs) for [submitting changes](./pulls)
+
+
+## Installation
+
+Running this project can be done either directly on your workstation system, or in a "container" via Docker.
+
+For people comfortable with Docker, or who are excited to learn about it, it can be the best way to get going.
+
+### Docker Install
+
+Running this project via Docker requires:
+
+  * [Docker](https://docs.docker.com/engine/installation/)
+  * [`docker-compose`](https://docs.docker.com/compose/install/)
+
+Running the project in a Docker container should be as simple as:
+
+```
+make setup
+make run
+```
+
+If you get an error about a port "address already in use", you can change the `PORT` environment variable in your local `.env` file.
+
+Barring any changes, you may now visit a JSON endpoint at: `http://localhost:8080/repositories`
+
+### Local System Install
+
+Running this project directly on your system requires:
+
+  * Go 1.7+
+  * Postgresql
+
+(Setting up these services is outside the scope of this README.)
+
+```
+cd path/to/coverage
+createdb datatogether_coverage
+go build
+go get ./
+# Set a free port on which to serve JSON
+export PORT=8080
+# Your postgresql instance may be running on a different port
+export POSTGRES_DB_URL=postgres://localhost:5432/datatogether_coverage
+$GOPATH/bin/coverage
+```
+
+Barring any changes, you may now visit a JSON endpoint at: `http://localhost:8080/repositories`
+
+
+## Development
+
+Please follow the install instructions above! Inclusion of tests are appreciated!
+
+For a list of all availabe helper commands, just type `make`.
+
+
 ## License & Copyright
 
 Copyright (C) 2017 Data Together
@@ -45,22 +121,3 @@ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.
 
 See the [`LICENSE`](./LICENSE) file for details.
-
-
-## Getting Involved
-
-We would love involvement from more people! If you notice any errors or would like to submit changes, please see our [Contributing Guidelines](./github/CONTRIBUTING.md).
-
-We use GitHub issues for [tracking bugs and feature requests](./issues) and Pull Requests (PRs) for [submitting changes](./pulls)
-
-
-## Installation
-
-The easiest way to get going is to use [docker-compose](https://docs.docker.com/compose/install/). Once you have that:
-
-TODO - finish installation instructions
-
-
-## Development
-
-Coming soon.
