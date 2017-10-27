@@ -36,11 +36,15 @@ The output is cached in [`cache.json`](cache.json). Because this is a large file
 ## Routes
 
 * `/healthcheck` - server status
-* `/repositories` - listing of all data repositories
-* `/repositories/:repository_uuid` - details of one data repository
-* `/fulltree` - 
-* `/coverage` - 
-* `/tree` - alias for `/coverage`
+* `/repositories` - list all data repositories [:question:][route-repos]
+* `/repositories/:repository_uuid` - get details for a single data repository [:question:][route-repo]
+* `/fulltree` - get full coverage tree of url-based resources
+* `/tree` - get scope-able coverage tree [:question:][route-coverage]
+* `/coverage` - get coverage summary (not currently used)
+
+   [route-repos]: http://petstore.swagger.io/?url=https://raw.githubusercontent.com/datatogether/api/master/open_api.yaml#/default/get_repositories
+   [route-repo]: http://petstore.swagger.io/?url=https://raw.githubusercontent.com/datatogether/api/master/open_api.yaml#/default/get_repository__id_
+   [route-coverage]: http://petstore.swagger.io/?url=https://raw.githubusercontent.com/datatogether/api/master/open_api.yaml#/default/get_coverage
 
 
 ## Getting Involved
@@ -96,7 +100,6 @@ $GOPATH/bin/coverage
 ```
 
 Barring any changes, you may now visit a JSON endpoint at: `http://localhost:8080/repositories`
-
 
 
 ## Development
