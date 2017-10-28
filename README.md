@@ -13,6 +13,21 @@ This code repo provides the JSON back-end: [`https://api.archivers.co/coverage`]
 The [`datatogether/webapp` repo](https://github.com/datatogether/webapp) provides the visual front-end: [`https://archivers.co/coverage`](https://archivers.co/coverage)
 
 
+## License & Copyright
+
+Copyright (C) 2017 Data Together
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free Software
+Foundation, version 3.0.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+
+See the [`LICENSE`](./LICENSE) file for details.
+
+
 ## Current Data Repositories
 
 Actual source datasets can be found in each [`/repositories/*` directory](/repositories). It currently includes the following:
@@ -51,7 +66,7 @@ The output is cached in [`cache.json`](cache.json). Because this is a large file
 
 We would love involvement from more people! If you notice any errors or would like to submit changes, please see our [Contributing Guidelines](./github/CONTRIBUTING.md).
 
-We use GitHub issues for [tracking bugs and feature requests](./issues) and Pull Requests (PRs) for [submitting changes](./pulls)
+We use GitHub issues for [tracking bugs and feature requests](https://github.com/datatogether/coverage/issues) and Pull Requests (PRs) for [submitting changes](https://github.com/datatogether/coverage/pulls)
 
 
 ## Installation
@@ -107,17 +122,3 @@ Barring any changes, you may now visit a JSON endpoint at: `http://localhost:808
 Please follow the install instructions above! Inclusion of tests are appreciated!
 
 For a list of all availabe helper commands, just type `make`.
-
-
-## License & Copyright
-
-Copyright (C) 2017 Data Together
-This program is free software: you can redistribute it and/or modify it under
-the terms of the GNU Affero General Public License as published by the Free Software
-Foundation, version 3.0.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE.
-
-See the [`LICENSE`](./LICENSE) file for details.
