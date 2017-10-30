@@ -79,8 +79,8 @@ For people comfortable with Docker, or who are excited to learn about it, it can
 
 Running this project via Docker requires:
 
-  * [Docker](https://docs.docker.com/engine/installation/)
-  * [`docker-compose`](https://docs.docker.com/compose/install/)
+  * [Docker](https://docs.docker.com/engine/installation/) (17.06.0+)
+  * [Docker Compose](https://docs.docker.com/compose/install/) (1.6.0+)
 
 Running the project in a Docker container should be as simple as:
 
