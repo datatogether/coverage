@@ -1,0 +1,10 @@
+.git
+.github
+.gitignore
+.circleci
+.env
+*.env
+**/*.md
+LICENSE
+Dockerfile
+docker-compose.yml

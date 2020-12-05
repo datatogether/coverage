@@ -79,8 +79,8 @@ For people comfortable with Docker, or who are excited to learn about it, it can
 
 Running this project via Docker requires:
 
-  * [Docker](https://docs.docker.com/engine/installation/)
-  * [`docker-compose`](https://docs.docker.com/compose/install/)
+  * [Docker](https://docs.docker.com/engine/installation/) (17.06.0+)
+  * [Docker Compose](https://docs.docker.com/compose/install/) (1.6.0+)
 
 Running the project in a Docker container should be as simple as:
 
@@ -92,6 +92,8 @@ make run
 If you get an error about a port "address already in use", you can change the `PORT` environment variable in your local `.env` file.
 
 Barring any changes, you may now visit a JSON endpoint at: `http://localhost:8080/repositories`
+
+**Note:** Provided `docker-compose.yml` file is optimized for the development environment. Necessary changes should be made in it for production.
 
 ### Local System Install
 
@@ -121,4 +123,8 @@ Barring any changes, you may now visit a JSON endpoint at: `http://localhost:808
 
 Please follow the install instructions above! Inclusion of tests are appreciated!
 
-For a list of all availabe helper commands, just type `make`.
+For a list of all available helper commands, just type `make`.
+
+For easier development workflow, the application runs behind [gin](https://github.com/codegangsta/gin) on port `55555`.
+This allows live building and reloading of the server when Go files are modified.
+If for any reason this is an undesired behavior, simply comment out `- "55555:55555"` and `command: gin -i -p 55555 -a $PORT` lines from the `docker-compose.yml` file.
